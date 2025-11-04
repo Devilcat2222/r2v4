@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top Sidebar Demo</title>
+  <style>
+    /* ---- Reset & basic layout ---- */
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin:0; font-family: Arial, sans-serif; background:#f4f4f4; }
+
+    /* ---- Top toggle button ---- */
+    #toggleBtn {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      z-index: 1001;
+      background: #333;
+      color: #fff;
+      border: none;
+      padding: 10px 14px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background .2s;
+    }
+    #toggleBtn:hover { background:#555; }
+
+    /* ---- Sidebar (top) ---- */
+    #topSidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: #222;
+      color: #fff;
+      padding: 60px 20px 20px;
+      transform: translateY(-100%);
+      transition: transform .35s ease-in-out;
+      z-index: 1000;
+      box-shadow: 0 4px 8px rgba(0,0,0,.2);
+    }
+    #topSidebar.open { transform: translateY(0); }
+
+    /* Close button inside sidebar */
+    #closeBtn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    /* Sidebar links */
+    #topSidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    #topSidebar ul li a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.1rem;
+      padding: 8px 12px;
+      border-radius: 4px;
+      transition: background .2s;
+    }
+    #topSidebar ul li a:hover { background: rgba(255,255,255,.2); }
+
+    /* Main content (just for demo) */
+    main {
+      padding: 80px 20px 20px;
+      max-width: 900px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Toggle button (always visible) -->
+  <button id="toggleBtn" aria-label="Open menu">☰</button>
+
+  <!-- Top sidebar -->
+  <nav id="topSidebar" aria-hidden="true">
+    <button id="closeBtn" aria-label="Close menu">✕</button>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Demo content -->
+  <main>
+    <h1>Welcome to My Site</h1>
+    <p>Click the <strong>☰</strong> button in the top-left corner to open the top navigation bar. It slides down smoothly and can be closed with the <strong>✕</strong> button or by clicking the menu button again.</p>
+
+    <section id="home"><h2>Home</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit…</p></section>
+    <section id="about"><h2>About</h2><p>…</p></section>
+    <section id="services"><h2>Services</h2><p>…</p></section>
+    <section id="portfolio"><h2>Portfolio</h2><p>…</p></section>
+    <section id="contact"><h2>Contact</h2><p>…</p></section>
+  </main>
+
+  <script>
+    const toggleBtn = document.getElementById('toggleBtn');
+    const closeBtn   = document.getElementById('closeBtn');
+    const sidebar    = document.getElementById('topSidebar');
+
+    function openSidebar() {
+      sidebar.classList.add('open');
+      sidebar.setAttribute('aria-hidden', 'false');
+      toggleBtn.textContent = '✕';          // change icon to close
+      toggleBtn.setAttribute('aria-label', 'Close menu');
+    }
+
+    function closeSidebar() {
+      sidebar.classList.remove('open');
+      sidebar.setAttribute('aria-hidden', 'true');
+      toggleBtn.textContent = '☰';          // back to hamburger
+      toggleBtn.setAttribute('aria-label', 'Open menu');
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
+    });
+
+    closeBtn.addEventListener('click', closeSidebar);
+
+    // Optional: close when clicking a link (mobile friendliness)
+    sidebar.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', closeSidebar);
+    });
+  </script>
+</body>
+</html>
