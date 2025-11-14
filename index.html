@@ -3,10 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Top Sidebar Demo</title>
+  <title>ᵣ₂ᵥ₄</title>
   <!-- Prefer system Frutiger if available, otherwise load a Frutiger-like webfont (Source Sans 3) -->
   <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
+    /* Local font-face rules: place font files under /assets/fonts/ and they'll be used when available.
+       Expected filenames (examples):
+         - assets/fonts/Frutiger.woff2
+         - assets/fonts/SourceSans3-Regular.woff2
+       These are optional — browser will fall back to the web/system stack if missing. */
+    @font-face{
+      font-family: 'LocalFrutiger';
+      src: url('/assets/fonts/Frutiger.woff2') format('woff2'), url('/assets/fonts/Frutiger.woff') format('woff');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face{
+      font-family: 'LocalSourceSans3';
+      src: url('/assets/fonts/SourceSans3-Regular.woff2') format('woff2'), url('/assets/fonts/SourceSans3-Regular.woff') format('woff');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+    }
     /* ---------------- Reset & variables ---------------- */
     *, *::before, *::after { box-sizing: border-box; }
     :root{
@@ -15,6 +34,7 @@
       --muted: #6b7280;
       --text: #0f172a;
       --accent: #111827;
+      --toggle-bg-alpha: 0.03;
       --radius: 10px;
       --max-width: 920px;
       --gap: 20px;
@@ -23,7 +43,8 @@
     /* Frutiger-like typography stack: prefer local Frutiger, fall back to Source Sans 3/Inter */
     body {
       margin: 0;
-      font-family: "Frutiger", "Source Sans 3", Inter, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      /* Prefer local fonts if provided in /assets/fonts/ */
+      font-family: "LocalFrutiger", "LocalSourceSans3", "Frutiger", "Source Sans 3", Inter, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
       background: var(--bg);
       color: var(--text);
       -webkit-font-smoothing: antialiased;
@@ -32,13 +53,13 @@
       font-size: 16px;
     }
 
-    /* ---------------- Top toggle button ---------------- */
+  /* ---------------- Top toggle button ---------------- */
     #toggleBtn {
       position: fixed;
       top: 16px;
       left: 16px;
       z-index: 1001;
-      background: rgba(17,24,39,0.03);
+      background: rgba(17,24,39,var(--toggle-bg-alpha));
       color: var(--accent);
       border: 1px solid rgba(15,23,42,0.06);
       padding: 10px 12px;
@@ -49,6 +70,7 @@
       box-shadow: 0 1px 0 rgba(0,0,0,0.02);
     }
     #toggleBtn:hover { background: rgba(17,24,39,0.06); transform: translateY(-1px); }
+    #toggleBtn img{ display:block; width:20px; height:20px; object-fit:contain; }
 
     /* ---------------- Sidebar (top) ---------------- */
     #topSidebar {
@@ -59,13 +81,16 @@
       background: var(--card);
       color: var(--text);
       padding: 56px 18px 20px;
-      transform: translateY(-110%);
-      transition: transform .36s cubic-bezier(.2,.9,.2,1);
+      transform: translate3d(0,-110%,0);
+      transition: transform .36s cubic-bezier(.2,.9,.2,1), opacity .28s linear;
+      will-change: transform, opacity;
       z-index: 1000;
       box-shadow: 0 8px 24px rgba(15,23,42,0.08);
       border-bottom: 1px solid rgba(15,23,42,0.03);
     }
     #topSidebar.open { transform: translateY(0); }
+    #topSidebar.open{ opacity: 1; }
+    #topSidebar{ opacity: 0.98; }
 
     /* Close button inside sidebar */
     #closeBtn{
@@ -151,6 +176,7 @@
       transition: background .18s, transform .08s;
     }
     #settingsBtn:hover{ background: rgba(17,24,39,0.06); transform: translateY(-1px); }
+    #settingsBtn img{ display:block; width:18px; height:18px; object-fit:contain; }
 
     #settingsPanel{
       position: fixed;
@@ -160,54 +186,180 @@
       width: min(420px, 90vw);
       background: var(--card);
       box-shadow: -8px 0 24px rgba(15,23,42,0.08);
-      transform: translateX(110%);
-      transition: transform .28s cubic-bezier(.2,.9,.2,1);
+      transform: translate3d(110%,0,0);
+      transition: transform .28s cubic-bezier(.2,.9,.2,1), opacity .24s linear;
+      will-change: transform, opacity;
       z-index: 1200;
       padding: 20px;
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
+    /* scrollable inner area so panel can scroll when content is long */
+    .settings-inner{
+      flex: 1 1 auto;
+      overflow: auto;
+      padding-right: 6px; /* for comfortable scrolling */
+      -webkit-overflow-scrolling: touch;
+    }
+    /* top floating close button inside the panel */
+    #settingsCloseTop{
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 1300;
+      background: rgba(17,24,39,0.04);
+      border: 1px solid rgba(15,23,42,0.06);
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
     #settingsPanel.open{ transform: translateX(0); }
+    #settingsPanel{ opacity: 0.99; }
     #settingsPanel h3{ margin: 0; font-size: 1.05rem; font-weight: 600; }
     .settings-row{ display:flex; gap:10px; align-items:center; }
     .settings-row label{ flex:0 0 110px; color:var(--muted); font-size:0.95rem; }
-    .settings-row input[type="text"]{ flex:1; padding:8px 10px; border-radius:8px; border:1px solid rgba(15,23,42,0.06); }
+  .settings-row input[type="text"]{ flex:1; padding:8px 10px; border-radius:8px; border:1px solid rgba(15,23,42,0.06); }
+  .settings-row input[type="range"]{ width:160px; }
+  .icon-preview{ width:48px; height:48px; border-radius:8px; border:1px solid rgba(15,23,42,0.06); display:flex; align-items:center; justify-content:center; overflow:hidden; background:rgba(0,0,0,0.02); }
+  .icon-preview img{ width:100%; height:100%; object-fit:cover; }
     .settings-actions{ margin-top: auto; display:flex; gap:8px; }
     .btn{ padding:8px 12px; border-radius:8px; border:1px solid rgba(15,23,42,0.06); background:rgba(17,24,39,0.03); cursor:pointer; }
     .btn.primary{ background: var(--accent); color:#fff; border-color:transparent; }
     .bg-preview{ height:120px; border-radius:8px; background-size:cover; background-position:center; border:1px solid rgba(15,23,42,0.04); }
+    /* make buttons semi-transparent by default, full on hover */
+    button, .btn, #toggleBtn, #settingsBtn, #closeBtn, #settingsCloseTop {
+      opacity: 0.5;
+      transition: opacity .12s ease;
+    }
+    button:hover, .btn:hover, #toggleBtn:hover, #settingsBtn:hover, #settingsCloseTop:hover {
+      opacity: 1;
+    }
+    /* Top sidebar submenu styles */
+    .nav-item { margin-bottom: 6px; }
+    .nav-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      background: rgba(17,24,39,var(--toggle-bg-alpha));
+      color: var(--accent);
+      border-radius: 8px;
+      border: 1px solid rgba(15,23,42,0.06);
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+      font-weight: 600;
+      font-family: inherit;
+      -webkit-tap-highlight-color: transparent;
+      transition: background .18s, transform .08s, opacity .12s;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.02);
+      font-size: 1.05rem;
+    }
+    .nav-toggle:hover{ background: rgba(17,24,39,0.06); transform: translateY(-1px); }
+    .nav-toggle[aria-expanded="true"]{ background: rgba(17,24,39,0.06); }
+    .nav-toggle:focus, .nav-toggle:focus-visible { outline: none !important; box-shadow: none !important; }
+
+    /* Smooth, hardware-accelerated submenu animation using scaleY + opacity */
+    .submenu{
+      transform-origin: top center;
+      transform: scaleY(0);
+      transition: transform .28s cubic-bezier(.2,.9,.2,1), opacity .22s ease;
+      opacity: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin: 8px 0 12px 0;
+      will-change: transform, opacity;
+      pointer-events: none;
+    }
+    .nav-item.expanded .submenu{
+      transform: scaleY(1);
+      opacity: 1;
+      pointer-events: auto;
+    }
+    /* match top sidebar link style so sublinks look identical */
+    .submenu a{
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 12px;
+      border-radius: 8px;
+      text-decoration: none;
+      color: var(--accent);
+      background: rgba(0,0,0,0.02);
+      border: 1px solid rgba(15,23,42,0.02);
+      font-size: 1.05rem;
+      font-weight: 600;
+      line-height: 1.2;
+      font-family: inherit;
+      transition: background .14s, color .14s;
+    }
+    /* Button style variants (controlled by data attribute on :root) */
+    :root[data-button-style="default"] .btn{ border-radius:8px; box-shadow:0 1px 0 rgba(0,0,0,0.02); }
+    :root[data-button-style="flat"] .btn{ border-radius:6px; box-shadow:none; background: transparent; border:1px solid rgba(15,23,42,0.06); }
+    :root[data-button-style="pill"] .btn{ border-radius:999px; padding-left:14px; padding-right:14px; }
+    .submenu a:hover{ background: rgba(17,24,39,0.04); }
   </style>
+  <!-- favicon link that can be updated dynamically -->
+  <link id="faviconLink" rel="icon" href="assets/favicon.svg">
 </head>
 <body>
-
   <!-- Toggle button (always visible) -->
-  <button id="toggleBtn" aria-label="Open menu">☰</button>
+  <button id="toggleBtn" aria-label="Open menu" aria-pressed="false"><img id="toggleIcon" alt="menu icon"></button>
   <!-- Settings button -->
-  <button id="settingsBtn" aria-label="Open settings">⚙︎</button>
+  <button id="settingsBtn" aria-label="Open settings"><img id="settingsIcon" alt="settings icon"></button>
 
   <!-- Top sidebar -->
   <nav id="topSidebar" aria-hidden="true">
     <button id="closeBtn" aria-label="Close menu">✕</button>
     <ul>
-      <li><a href="#home">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#portfolio">Portfolio</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li class="nav-item">
+        <button class="nav-toggle" aria-expanded="false">Home</button>
+        <div class="submenu" aria-hidden="true">
+          <a href="#home">Overview</a>
+          <a href="#home-features">Features</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <button class="nav-toggle" aria-expanded="false">About</button>
+        <div class="submenu" aria-hidden="true">
+          <a href="#team">Team</a>
+          <a href="#history">History</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <button class="nav-toggle" aria-expanded="false">Services</button>
+        <div class="submenu" aria-hidden="true">
+          <a href="#consulting">Consulting</a>
+          <a href="#development">Development</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <button class="nav-toggle" aria-expanded="false">Portfolio</button>
+        <div class="submenu" aria-hidden="true">
+          <a href="#projects">Projects</a>
+          <a href="#case-studies">Case studies</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <button class="nav-toggle" aria-expanded="false">Contact</button>
+        <div class="submenu" aria-hidden="true">
+          <a href="#contact-form">Get in touch</a>
+          <a href="#locations">Locations</a>
+        </div>
+      </li>
     </ul>
   </nav>
 
   <!-- Demo content -->
   <main>
-    <h1>Welcome to My Site</h1>
-    <p>Click the <strong>☰</strong> button in the top-left corner to open the top navigation bar. It slides down smoothly and can be closed with the <strong>✕</strong> button or by clicking the menu button again.</p>
+  <h1>Welcome to My Si</h1>
 
-    <section id="home"><h2>Home</h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit…</p></section>
-    <section id="about"><h2>About</h2><p>…</p></section>
-    <section id="services"><h2>Services</h2><p>…</p></section>
-    <section id="portfolio"><h2>Portfolio</h2><p>…</p></section>
-    <section id="contact"><h2>Contact</h2><p>…</p></section>
+  <section id="home"><h2>Home</h2></section>
   </main>
 
   <!-- Settings panel (slide-in) -->
@@ -215,9 +367,44 @@
     <h3>Settings</h3>
     <p style="margin:0;color:var(--muted);font-size:0.95rem;">Customize site appearance. Background changes persist in this browser.</p>
 
-    <div class="settings-row">
+    <button id="settingsCloseTop" aria-label="Close settings" class="btn">✕</button>
+
+    <div class="settings-inner">
+      <div style="font-weight:600;color:var(--muted);font-size:0.95rem;margin-top:8px;">Theme</div>
+      <div class="settings-row">
+        <label for="textColor">Text color</label>
+        <input id="textColor" type="color" value="#0f172a">
+      </div>
+      <div class="settings-row">
+        <label for="accentColor">Accent color</label>
+        <input id="accentColor" type="color" value="#111827">
+      </div>
+      <div class="settings-row">
+        <label for="buttonStyle">Button style</label>
+        <select id="buttonStyle">
+          <option value="default">Default</option>
+          <option value="flat">Flat</option>
+          <option value="pill">Pill</option>
+        </select>
+      </div>
+      <div class="settings-row">
+        <label for="fontSelect">Font</label>
+        <select id="fontSelect">
+          <option value="Frutiger, 'Source Sans 3', Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial">Frutiger / Source Sans</option>
+          <option value="'Source Sans 3', Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial">Source Sans 3</option>
+          <option value="Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial">Inter</option>
+          <option value="Georgia, 'Times New Roman', Times, serif">Serif (Georgia)</option>
+        </select>
+      </div>
+      <div class="settings-row">
       <label for="bgUrl">Image URL</label>
       <input id="bgUrl" type="text" placeholder="https://.../image.jpg">
+    </div>
+
+    <div class="settings-row">
+      <label for="toggleOpacity">Menu opacity</label>
+      <input id="toggleOpacity" type="range" min="0" max="1" step="0.01" value="0.03">
+      <div style="width:48px;text-align:right;color:var(--muted);font-size:0.95rem;" id="toggleOpacityVal">0.03</div>
     </div>
 
     <div class="settings-row">
@@ -225,10 +412,81 @@
       <input id="bgFile" type="file" accept="image/*">
     </div>
 
+    <hr style="border:none;border-top:1px solid rgba(15,23,42,0.04);margin:6px 0;">
+
+    <div style="font-weight:600;color:var(--muted);font-size:0.95rem;">Favicon</div>
+    <div class="settings-row">
+      <label for="faviconUrl">Favicon URL</label>
+      <input id="faviconUrl" type="text" placeholder="https://.../favicon.ico">
+      <div class="icon-preview" id="faviconPreview"><img alt="favicon preview" id="faviconPreviewImg"></div>
+    </div>
+    <div class="settings-row">
+      <label for="faviconFile">Upload</label>
+      <input id="faviconFile" type="file" accept="image/*">
+    </div>
+
+    <div class="settings-row">
+      <label for="siteTitle">Site title</label>
+      <input id="siteTitle" type="text" placeholder="Site title">
+    </div>
+
+    <div style="font-weight:600;color:var(--muted);font-size:0.95rem;margin-top:8px;">Title presets</div>
+    <div id="titlePresets" style="display:flex;gap:8px;flex-wrap:wrap;padding:6px;border-radius:8px;border:1px solid rgba(15,23,42,0.03);"></div>
+
+    <hr style="border:none;border-top:1px solid rgba(15,23,42,0.04);margin:6px 0;">
+
+    <div style="font-weight:600;color:var(--muted);font-size:0.95rem;">Icons</div>
+
+    <div class="settings-row">
+      <label for="toggleIconUrl">Menu icon URL</label>
+      <input id="toggleIconUrl" type="text" placeholder="https://.../icon.png">
+      <div class="icon-preview" id="toggleIconPreview"><img alt="menu preview" id="toggleIconPreviewImg"></div>
+    </div>
+
+    <div class="settings-row">
+      <label for="toggleIconFile">Upload</label>
+      <input id="toggleIconFile" type="file" accept="image/*">
+    </div>
+
+    <div class="settings-row">
+      <label for="settingsIconUrl">Settings icon URL</label>
+      <input id="settingsIconUrl" type="text" placeholder="https://.../icon.png">
+      <div class="icon-preview" id="settingsIconPreview"><img alt="settings preview" id="settingsIconPreviewImg"></div>
+    </div>
+
+    <div class="settings-row">
+      <label for="settingsIconFile">Upload</label>
+      <input id="settingsIconFile" type="file" accept="image/*">
+    </div>
+
     <div class="settings-row">
       <label>Preview</label>
       <div id="bgPreview" class="bg-preview" aria-hidden="true"></div>
     </div>
+
+    <div style="font-weight:600;color:var(--muted);font-size:0.95rem;">Preset icons</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <div style="flex:1;min-width:220px;">
+        <div style="font-size:0.95rem;color:var(--muted);margin-bottom:6px;">Menu presets</div>
+        <div id="menuPresets" style="display:flex;gap:8px;flex-wrap:wrap;
+          background:transparent;padding:6px;border-radius:8px;border:1px solid rgba(15,23,42,0.03);
+        "></div>
+      </div>
+      <div style="flex:1;min-width:220px;">
+        <div style="font-size:0.95rem;color:var(--muted);margin-bottom:6px;">Settings presets</div>
+        <div id="settingsPresets" style="display:flex;gap:8px;flex-wrap:wrap;
+          background:transparent;padding:6px;border-radius:8px;border:1px solid rgba(15,23,42,0.03);
+        "></div>
+      </div>
+    </div>
+
+      <div style="font-weight:600;color:var(--muted);font-size:0.95rem;margin-top:8px;">Favicon presets</div>
+      <div id="faviconPresets" style="display:flex;gap:8px;flex-wrap:wrap;padding:6px;border-radius:8px;border:1px solid rgba(15,23,42,0.03);"></div>
+
+      <div style="font-weight:600;color:var(--muted);font-size:0.95rem;margin-top:8px;">Background presets</div>
+      <div id="bgPresets" style="display:flex;gap:8px;flex-wrap:wrap;padding:6px;border-radius:8px;border:1px solid rgba(15,23,42,0.03);"></div>
+
+    </div> <!-- .settings-inner -->
 
     <div class="settings-actions">
       <button id="saveSettings" class="btn primary">Save</button>
@@ -245,14 +503,14 @@
     function openSidebar() {
       sidebar.classList.add('open');
       sidebar.setAttribute('aria-hidden', 'false');
-      toggleBtn.textContent = '✕';          // change icon to close
+      toggleBtn.setAttribute('aria-pressed', 'true');
       toggleBtn.setAttribute('aria-label', 'Close menu');
     }
 
     function closeSidebar() {
       sidebar.classList.remove('open');
       sidebar.setAttribute('aria-hidden', 'true');
-      toggleBtn.textContent = '☰';          // back to hamburger
+      toggleBtn.setAttribute('aria-pressed', 'false');
       toggleBtn.setAttribute('aria-label', 'Open menu');
     }
 
@@ -267,17 +525,77 @@
       link.addEventListener('click', closeSidebar);
     });
 
+    // Expandable submenu behavior for top sidebar
+    (function setupSubmenus(){
+      const toggles = sidebar.querySelectorAll('.nav-toggle');
+      toggles.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const li = btn.closest('.nav-item');
+          if(!li) return;
+          const expanded = li.classList.toggle('expanded');
+          btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+          const submenu = li.querySelector('.submenu');
+          if(submenu) submenu.setAttribute('aria-hidden', expanded ? 'false' : 'true');
+        });
+      });
+    })();
+
     /* ---------------- Settings behavior ---------------- */
     const settingsBtn = document.getElementById('settingsBtn');
     const settingsPanel = document.getElementById('settingsPanel');
     const closeSettings = document.getElementById('closeSettings');
     const saveSettings = document.getElementById('saveSettings');
     const clearSettings = document.getElementById('clearSettings');
+
+    // storage + defaults
+  const STORAGE_KEY = 'site:settings';
+  let DEFAULT_TOGGLE_ICON = 'assets/menu.svg';
+  let DEFAULT_SETTINGS_ICON = 'assets/settings.svg';
+  let DEFAULT_FAVICON = 'assets/favicon.svg';
+
+    // capture initial title so reset can restore
+    const INITIAL_TITLE = document.title;
+    const faviconLink = document.getElementById('faviconLink');
+
+    // UI elements
     const bgUrlInput = document.getElementById('bgUrl');
     const bgFileInput = document.getElementById('bgFile');
     const bgPreview = document.getElementById('bgPreview');
 
-    const STORAGE_KEY = 'site:settings';
+    const faviconUrl = document.getElementById('faviconUrl');
+    const faviconFile = document.getElementById('faviconFile');
+    const faviconPreviewImg = document.getElementById('faviconPreviewImg');
+
+    const toggleIconEl = document.getElementById('toggleIcon');
+    const settingsIconEl = document.getElementById('settingsIcon');
+    const toggleIconUrl = document.getElementById('toggleIconUrl');
+    const toggleIconFile = document.getElementById('toggleIconFile');
+    const textColorInput = document.getElementById('textColor');
+    const accentColorInput = document.getElementById('accentColor');
+    const buttonStyleSelect = document.getElementById('buttonStyle');
+    const fontSelect = document.getElementById('fontSelect');
+    const siteTitleInput = (function(){ try{return document.getElementById('siteTitle')}catch(e){return null;} })();
+    const titlePresetsContainer = (function(){ try{return document.getElementById('titlePresets')}catch(e){return null;} })();
+    const toggleIconPreviewImg = document.getElementById('toggleIconPreviewImg');
+    const settingsIconUrl = document.getElementById('settingsIconUrl');
+    const settingsIconFile = document.getElementById('settingsIconFile');
+    const settingsIconPreviewImg = document.getElementById('settingsIconPreviewImg');
+
+  // set immediate defaults so buttons show icons before settings load
+  toggleIconEl.src = DEFAULT_TOGGLE_ICON;
+  settingsIconEl.src = DEFAULT_SETTINGS_ICON;
+  toggleIconPreviewImg.src = toggleIconEl.src;
+  settingsIconPreviewImg.src = settingsIconEl.src;
+  // ensure root has default button style attr
+  if(!document.documentElement.hasAttribute('data-button-style')) document.documentElement.setAttribute('data-button-style','default');
+  // live preview for theme controls
+  if(textColorInput) textColorInput.addEventListener('input', (e) => document.documentElement.style.setProperty('--text', e.target.value));
+  if(accentColorInput) accentColorInput.addEventListener('input', (e) => document.documentElement.style.setProperty('--accent', e.target.value));
+  if(buttonStyleSelect) buttonStyleSelect.addEventListener('change', (e) => document.documentElement.setAttribute('data-button-style', e.target.value));
+  if(fontSelect) fontSelect.addEventListener('change', (e) => document.body.style.fontFamily = e.target.value);
+
+    const toggleOpacity = document.getElementById('toggleOpacity');
+    const toggleOpacityVal = document.getElementById('toggleOpacityVal');
 
     function openSettings(){
       settingsPanel.classList.add('open');
@@ -292,6 +610,9 @@
       settingsPanel.classList.contains('open') ? closeSettingsPanel() : openSettings();
     });
     closeSettings.addEventListener('click', closeSettingsPanel);
+    // top floating close button inside panel
+    const settingsCloseTop = document.getElementById('settingsCloseTop');
+    if(settingsCloseTop) settingsCloseTop.addEventListener('click', closeSettingsPanel);
 
     // Load settings from localStorage
     function loadSettings(){
@@ -299,20 +620,85 @@
         const json = localStorage.getItem(STORAGE_KEY);
         if(!json) return;
         const cfg = JSON.parse(json);
-        if(cfg && cfg.background){
-          applyBackground(cfg.background);
-          bgPreview.style.backgroundImage = `url(${cfg.background})`;
-          bgUrlInput.value = cfg.background;
+        if(cfg){
+          if(cfg.background){
+            applyBackground(cfg.background);
+            // set preview safely (handle spaces in filenames)
+            try{ bgPreview.style.backgroundImage = `url("${encodeURI(cfg.background)}")`; }catch(e){ bgPreview.style.backgroundImage = `url(${cfg.background})`; }
+            bgUrlInput.value = cfg.background;
+          }
+          if(cfg.toggleIcon){
+            toggleIconEl.src = cfg.toggleIcon;
+            toggleIconPreviewImg.src = cfg.toggleIcon;
+            toggleIconUrl.value = cfg.toggleIcon;
+          } else {
+            toggleIconEl.src = DEFAULT_TOGGLE_ICON;
+            toggleIconPreviewImg.src = DEFAULT_TOGGLE_ICON;
+          }
+          if(typeof cfg.toggleOpacity !== 'undefined' && cfg.toggleOpacity !== null){
+            const v = parseFloat(cfg.toggleOpacity);
+            if(!isNaN(v)){
+              document.documentElement.style.setProperty('--toggle-bg-alpha', v);
+              toggleOpacity.value = v;
+              toggleOpacityVal.textContent = (Math.round(v*100)/100).toFixed(2);
+            }
+          }
+          if(cfg.settingsIcon){
+            settingsIconEl.src = cfg.settingsIcon;
+            settingsIconPreviewImg.src = cfg.settingsIcon;
+            settingsIconUrl.value = cfg.settingsIcon;
+          } else {
+            settingsIconEl.src = DEFAULT_SETTINGS_ICON;
+            settingsIconPreviewImg.src = DEFAULT_SETTINGS_ICON;
+          }
+          // favicon
+          if(cfg.favicon){
+            setFavicon(cfg.favicon);
+            faviconPreviewImg.src = cfg.favicon;
+            faviconUrl.value = cfg.favicon;
+          } else {
+            setFavicon(DEFAULT_FAVICON);
+            faviconPreviewImg.src = DEFAULT_FAVICON;
+          }
+          // title
+          if(cfg.title){
+            document.title = cfg.title;
+            if(siteTitleInput) siteTitleInput.value = cfg.title;
+          } else {
+            document.title = INITIAL_TITLE;
+            if(siteTitleInput) siteTitleInput.value = INITIAL_TITLE;
+          }
+          // theme: text color, accent, button style, font
+          if(cfg.textColor){
+            document.documentElement.style.setProperty('--text', cfg.textColor);
+            if(textColorInput) textColorInput.value = cfg.textColor;
+          }
+          if(cfg.accentColor){
+            document.documentElement.style.setProperty('--accent', cfg.accentColor);
+            if(accentColorInput) accentColorInput.value = cfg.accentColor;
+          }
+          if(cfg.buttonStyle){
+            document.documentElement.setAttribute('data-button-style', cfg.buttonStyle);
+            if(buttonStyleSelect) buttonStyleSelect.value = cfg.buttonStyle;
+          }
+          if(cfg.font){
+            document.body.style.fontFamily = cfg.font;
+            if(fontSelect) fontSelect.value = cfg.font;
+          }
         }
       }catch(e){ console.warn('Failed to load settings', e); }
     }
 
-    function saveSettingsToStorage(bg){
-      const cfg = { background: bg || null };
+    function saveSettingsToStorage(cfg){
       localStorage.setItem(STORAGE_KEY, JSON.stringify(cfg));
     }
 
     function applyBackground(url){
+      function safeBgUrl(u){
+        if(!u) return '';
+        try{ if(typeof u === 'string' && u.startsWith('data:')) return u; }catch(e){}
+        return encodeURI(u);
+      }
       if(!url){
         document.body.style.backgroundImage = '';
         document.body.style.backgroundColor = 'var(--bg)';
@@ -320,56 +706,320 @@
         document.body.style.backgroundPosition = '';
         return;
       }
-      document.body.style.backgroundImage = `url(${url})`;
+      const u = safeBgUrl(url);
+      document.body.style.backgroundImage = `url("${u}")`;
       document.body.style.backgroundSize = 'cover';
       document.body.style.backgroundPosition = 'center';
       document.body.style.backgroundRepeat = 'no-repeat';
     }
 
-    // Save button: reads URL field (preferred) or file data URL
+    function setFavicon(href){
+      if(!faviconLink) return;
+      try{
+        console.log('setFavicon:', href);
+        // avoid browser cache by adding a cache-busting query when appropriate
+        if(!href){
+          faviconLink.href = DEFAULT_FAVICON + '?v=' + Date.now();
+        } else if(typeof href === 'string' && href.startsWith('data:')){
+          // data URLs can be used directly
+          faviconLink.href = href;
+        } else if(typeof href === 'string'){
+          const sep = href.includes('?') ? '&' : '?';
+          faviconLink.href = href + sep + 'v=' + Date.now();
+        } else {
+          faviconLink.href = href;
+        }
+      }catch(e){ console.warn('Failed to set favicon', e); }
+    }
+
+    // Save button: reads URL fields (preferred) or file data URLs for bg and icons
     saveSettings.addEventListener('click', async () => {
-      let url = bgUrlInput.value.trim();
-      if(!url && bgFileInput.files && bgFileInput.files[0]){
-        // convert file to data URL
+      const newCfg = {};
+
+      // background
+      let bg = bgUrlInput.value.trim();
+      if(!bg && bgFileInput.files && bgFileInput.files[0]){
         const file = bgFileInput.files[0];
-        url = await new Promise((res, rej) => {
-          const r = new FileReader();
-          r.onload = () => res(r.result);
-          r.onerror = rej;
-          r.readAsDataURL(file);
+        bg = await new Promise((res, rej) => {
+          const r = new FileReader(); r.onload = () => res(r.result); r.onerror = rej; r.readAsDataURL(file);
         });
       }
-      applyBackground(url || null);
-      bgPreview.style.backgroundImage = url ? `url(${url})` : '';
-      saveSettingsToStorage(url || null);
+      newCfg.background = bg || null;
+
+      // toggle icon
+      let tIcon = toggleIconUrl.value.trim();
+      if(!tIcon && toggleIconFile.files && toggleIconFile.files[0]){
+        const file = toggleIconFile.files[0];
+        tIcon = await new Promise((res, rej) => {
+          const r = new FileReader(); r.onload = () => res(r.result); r.onerror = rej; r.readAsDataURL(file);
+        });
+      }
+  newCfg.toggleIcon = tIcon || null;
+
+  // toggle opacity
+  let op = parseFloat(toggleOpacity.value);
+  if(isNaN(op)) op = null;
+  newCfg.toggleOpacity = (op !== null) ? op : null;
+
+      // settings icon
+      let sIcon = settingsIconUrl.value.trim();
+      if(!sIcon && settingsIconFile.files && settingsIconFile.files[0]){
+        const file = settingsIconFile.files[0];
+        sIcon = await new Promise((res, rej) => {
+          const r = new FileReader(); r.onload = () => res(r.result); r.onerror = rej; r.readAsDataURL(file);
+        });
+      }
+      newCfg.settingsIcon = sIcon || null;
+
+      // favicon
+      let fIcon = faviconUrl.value.trim();
+      if(!fIcon && faviconFile.files && faviconFile.files[0]){
+        const file = faviconFile.files[0];
+        fIcon = await new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result); r.onerror = rej; r.readAsDataURL(file); });
+      }
+      newCfg.favicon = fIcon || null;
+
+      // site title
+      const titleVal = siteTitleInput ? siteTitleInput.value.trim() : '';
+      newCfg.title = titleVal || null;
+
+      // theme settings
+      const textColorVal = textColorInput ? textColorInput.value : null;
+      const accentColorVal = accentColorInput ? accentColorInput.value : null;
+      const btnStyleVal = buttonStyleSelect ? buttonStyleSelect.value : null;
+      const fontVal = fontSelect ? fontSelect.value : null;
+      newCfg.textColor = textColorVal || null;
+      newCfg.accentColor = accentColorVal || null;
+      newCfg.buttonStyle = btnStyleVal || null;
+      newCfg.font = fontVal || null;
+
+      // apply theme immediately
+      if(textColorVal) document.documentElement.style.setProperty('--text', textColorVal);
+      if(accentColorVal) document.documentElement.style.setProperty('--accent', accentColorVal);
+      if(btnStyleVal) document.documentElement.setAttribute('data-button-style', btnStyleVal);
+      if(fontVal) document.body.style.fontFamily = fontVal;
+
+      // apply
+      applyBackground(newCfg.background);
+      if(newCfg.background){ try{ bgPreview.style.backgroundImage = `url("${encodeURI(newCfg.background)}")`; }catch(e){ bgPreview.style.backgroundImage = `url(${newCfg.background})`; } }
+      else { bgPreview.style.backgroundImage = ''; }
+
+  if(newCfg.toggleIcon){ toggleIconEl.src = newCfg.toggleIcon; toggleIconPreviewImg.src = newCfg.toggleIcon; }
+  else { toggleIconEl.src = DEFAULT_TOGGLE_ICON; toggleIconPreviewImg.src = DEFAULT_TOGGLE_ICON; }
+
+  if(newCfg.settingsIcon){ settingsIconEl.src = newCfg.settingsIcon; settingsIconPreviewImg.src = newCfg.settingsIcon; }
+  else { settingsIconEl.src = DEFAULT_SETTINGS_ICON; settingsIconPreviewImg.src = DEFAULT_SETTINGS_ICON; }
+
+  // apply favicon and title
+  if(newCfg.favicon){ setFavicon(newCfg.favicon); faviconPreviewImg.src = newCfg.favicon; faviconUrl.value = newCfg.favicon; }
+  else { setFavicon(DEFAULT_FAVICON); faviconPreviewImg.src = DEFAULT_FAVICON; faviconUrl.value = ''; }
+
+  if(newCfg.title){ document.title = newCfg.title; if(siteTitleInput) siteTitleInput.value = newCfg.title; }
+  else { document.title = INITIAL_TITLE; if(siteTitleInput) siteTitleInput.value = INITIAL_TITLE; }
+
+      saveSettingsToStorage(newCfg);
     });
 
-    // Clear settings
+    // Live update for opacity slider
+    toggleOpacity.addEventListener('input', () => {
+      const v = parseFloat(toggleOpacity.value) || 0;
+      document.documentElement.style.setProperty('--toggle-bg-alpha', v);
+      toggleOpacityVal.textContent = (Math.round(v*100)/100).toFixed(2);
+    });
+
+    // favicon URL live preview
+    faviconUrl.addEventListener('input', () => { const v = faviconUrl.value.trim(); faviconPreviewImg.src = v || ''; });
+    faviconFile.addEventListener('change', () => { const f = faviconFile.files && faviconFile.files[0]; if(!f){ faviconPreviewImg.removeAttribute('src'); return; } const r = new FileReader(); r.onload = () => { faviconPreviewImg.src = r.result; }; r.readAsDataURL(f); });
+
+    // Clear settings (reset all)
     clearSettings.addEventListener('click', () => {
       bgUrlInput.value = '';
       bgFileInput.value = '';
+      toggleIconUrl.value = '';
+      toggleIconFile.value = '';
+      settingsIconUrl.value = '';
+      settingsIconFile.value = '';
       bgPreview.style.backgroundImage = '';
+      // restore default icons
+      toggleIconEl.src = DEFAULT_TOGGLE_ICON;
+      settingsIconEl.src = DEFAULT_SETTINGS_ICON;
+      toggleIconPreviewImg.src = DEFAULT_TOGGLE_ICON;
+      settingsIconPreviewImg.src = DEFAULT_SETTINGS_ICON;
+      // restore favicon & title defaults
+      faviconUrl.value = '';
+      faviconFile.value = '';
+      faviconPreviewImg.src = DEFAULT_FAVICON;
+      setFavicon(DEFAULT_FAVICON);
+      if(siteTitleInput) siteTitleInput.value = INITIAL_TITLE;
+      document.title = INITIAL_TITLE;
       applyBackground(null);
+      // reset opacity to default
+      document.documentElement.style.setProperty('--toggle-bg-alpha', 0.03);
+      if(toggleOpacity){ toggleOpacity.value = 0.03; toggleOpacityVal.textContent = '0.03'; }
+      // reset theme to defaults
+      document.documentElement.style.setProperty('--text', '#0f172a');
+      document.documentElement.style.setProperty('--accent', '#111827');
+      document.documentElement.setAttribute('data-button-style','default');
+      document.body.style.fontFamily = "Frutiger, 'Source Sans 3', Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif";
+      if(textColorInput) textColorInput.value = '#0f172a';
+      if(accentColorInput) accentColorInput.value = '#111827';
+      if(buttonStyleSelect) buttonStyleSelect.value = 'default';
+      if(fontSelect) fontSelect.value = "Frutiger, 'Source Sans 3', Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial";
       localStorage.removeItem(STORAGE_KEY);
     });
+
 
     // Live preview when entering URL
     bgUrlInput.addEventListener('input', () => {
       const v = bgUrlInput.value.trim();
-      bgPreview.style.backgroundImage = v ? `url(${v})` : '';
+      if(v){ try{ bgPreview.style.backgroundImage = `url("${encodeURI(v)}")`; }catch(e){ bgPreview.style.backgroundImage = `url(${v})`; } }
+      else { bgPreview.style.backgroundImage = ''; }
     });
+
+    // Icon URL previews
+    toggleIconUrl.addEventListener('input', () => { const v = toggleIconUrl.value.trim(); toggleIconPreviewImg.src = v || ''; });
+    settingsIconUrl.addEventListener('input', () => { const v = settingsIconUrl.value.trim(); settingsIconPreviewImg.src = v || ''; });
 
     // Live preview when selecting file
     bgFileInput.addEventListener('change', () => {
       const f = bgFileInput.files && bgFileInput.files[0];
       if(!f){ bgPreview.style.backgroundImage = ''; return; }
-      const r = new FileReader();
-      r.onload = () => { bgPreview.style.backgroundImage = `url(${r.result})`; };
-      r.readAsDataURL(f);
+      const r = new FileReader(); r.onload = () => { bgPreview.style.backgroundImage = `url(${r.result})`; }; r.readAsDataURL(f);
     });
 
-    // initialize
-    loadSettings();
+    // Icon file previews
+    toggleIconFile.addEventListener('change', () => {
+      const f = toggleIconFile.files && toggleIconFile.files[0];
+      if(!f){ toggleIconPreviewImg.removeAttribute('src'); return; }
+      const r = new FileReader(); r.onload = () => { toggleIconPreviewImg.src = r.result; }; r.readAsDataURL(f);
+    });
+    settingsIconFile.addEventListener('change', () => {
+      const f = settingsIconFile.files && settingsIconFile.files[0];
+      if(!f){ settingsIconPreviewImg.removeAttribute('src'); return; }
+      const r = new FileReader(); r.onload = () => { settingsIconPreviewImg.src = r.result; }; r.readAsDataURL(f);
+    });
+
+    // title presets loading
+    async function loadTitlePresets(){
+      try{
+        const res = await fetch('/assets/titlepresets.txt');
+        if(!res.ok) return;
+        const txt = await res.text();
+        const lines = txt.split(/\r?\n/).map(s => s.trim()).filter(Boolean);
+        const container = document.getElementById('titlePresets');
+        if(!container) return;
+        lines.forEach(t => {
+          const b = document.createElement('button');
+          b.className = 'btn'; b.style.padding = '6px'; b.textContent = t; b.title = t;
+          b.addEventListener('click', () => { if(siteTitleInput) siteTitleInput.value = t; document.title = t; });
+          container.appendChild(b);
+        });
+      }catch(e){ console.error('Error loading title presets:', e); }
+    }
+    // Load icon presets from manifest (if present)
+    async function loadPresets(){
+      try{
+        const res = await fetch('/assets/icons/manifest.json');
+        if(!res.ok) return;
+        const data = await res.json();
+        // if manifest provides defaults, prefer them
+        if(data.menu && Array.isArray(data.menu) && data.menu.length){
+          DEFAULT_TOGGLE_ICON = data.menu[0];
+        }
+        if(data.setting && Array.isArray(data.setting) && data.setting.length){
+          DEFAULT_SETTINGS_ICON = data.setting[0];
+        }
+        if(data.favicon && Array.isArray(data.favicon) && data.favicon.length){
+          DEFAULT_FAVICON = data.favicon[0];
+        }
+        // apply immediate defaults to previews/UI so loadSettings (which runs after) has sensible defaults
+        if(toggleIconEl) { toggleIconEl.src = DEFAULT_TOGGLE_ICON; toggleIconPreviewImg.src = DEFAULT_TOGGLE_ICON; }
+        if(settingsIconEl) { settingsIconEl.src = DEFAULT_SETTINGS_ICON; settingsIconPreviewImg.src = DEFAULT_SETTINGS_ICON; }
+        if(faviconPreviewImg) { faviconPreviewImg.src = DEFAULT_FAVICON; }
+        setFavicon(DEFAULT_FAVICON);
+        // menu
+        const menuContainer = document.getElementById('menuPresets');
+        if(data.menu && Array.isArray(data.menu) && menuContainer){
+          data.menu.forEach(src => {
+            const btn = document.createElement('button');
+            btn.className = 'btn';
+            btn.style.padding = '6px';
+            btn.style.display = 'flex';
+            btn.style.alignItems = 'center';
+            btn.style.justifyContent = 'center';
+            btn.style.width = '48px';
+            btn.style.height = '48px';
+            btn.title = src;
+            const img = document.createElement('img');
+            img.src = src;
+            img.style.width = '100%'; img.style.height = '100%'; img.style.objectFit = 'cover';
+            btn.appendChild(img);
+            btn.addEventListener('click', () => {
+              toggleIconUrl.value = src; toggleIconPreviewImg.src = src; toggleIconEl.src = src;
+            });
+            menuContainer.appendChild(btn);
+          });
+        }
+
+        // settings
+        const settingsContainer = document.getElementById('settingsPresets');
+        if(data.setting && Array.isArray(data.setting) && settingsContainer){
+          data.setting.forEach(src => {
+            const btn = document.createElement('button');
+            btn.className = 'btn';
+            btn.style.padding = '6px';
+            btn.style.display = 'flex';
+            btn.style.alignItems = 'center';
+            btn.style.justifyContent = 'center';
+            btn.style.width = '48px';
+            btn.style.height = '48px';
+            btn.title = src;
+            const img = document.createElement('img');
+            img.src = src;
+            img.style.width = '100%'; img.style.height = '100%'; img.style.objectFit = 'cover';
+            btn.appendChild(img);
+            btn.addEventListener('click', () => {
+              settingsIconUrl.value = src; settingsIconPreviewImg.src = src; settingsIconEl.src = src;
+            });
+            settingsContainer.appendChild(btn);
+          });
+        }
+          // favicon presets
+          const favContainer = document.getElementById('faviconPresets');
+          if(data.favicon && Array.isArray(data.favicon) && favContainer){
+            data.favicon.forEach(src => {
+              const btn = document.createElement('button');
+              btn.className = 'btn'; btn.style.padding = '6px'; btn.style.width = '36px'; btn.style.height = '36px';
+              const img = document.createElement('img'); img.src = src; img.style.width='100%'; img.style.height='100%'; img.style.objectFit='cover';
+              btn.appendChild(img);
+              btn.addEventListener('click', () => { console.log('favicon preset clicked:', src); faviconUrl.value = src; faviconPreviewImg.src = src; setFavicon(src); });
+              favContainer.appendChild(btn);
+            });
+          }
+          // background presets
+          const bgContainer = document.getElementById('bgPresets');
+          if(data.background && Array.isArray(data.background) && bgContainer){
+            data.background.forEach(src => {
+              const btn = document.createElement('button');
+              btn.className = 'btn'; btn.style.padding = '6px'; btn.style.width = '72px'; btn.style.height = '48px';
+              btn.title = src;
+              const img = document.createElement('img'); img.src = src;
+              img.style.width = '100%'; img.style.height = '100%'; img.style.objectFit = 'cover';
+              btn.appendChild(img);
+              btn.addEventListener('click', () => {
+                console.log('background preset clicked:', src);
+                // apply as background and update preview/input
+                bgUrlInput.value = src;
+                try{ bgPreview.style.backgroundImage = `url("${encodeURI(src)}")`; }catch(e){ bgPreview.style.backgroundImage = `url(${src})`; }
+                applyBackground(src);
+              });
+              bgContainer.appendChild(btn);
+            });
+          }
+      }catch(e){ console.error('Error loading presets:', e); }
+    }
+  // load presets first, then title presets and then stored settings so defaults from manifest are used
+  loadPresets().then(() => { loadTitlePresets(); loadSettings(); }).catch((e) => { console.error('Preset loading failed:', e); loadTitlePresets(); loadSettings(); });
   </script>
 </body>
 </html>
