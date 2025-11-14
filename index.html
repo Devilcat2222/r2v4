@@ -4,89 +4,187 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Top Sidebar Demo</title>
+  <!-- Prefer system Frutiger if available, otherwise load a Frutiger-like webfont (Source Sans 3) -->
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
-    /* ---- Reset & basic layout ---- */
+    /* ---------------- Reset & variables ---------------- */
     *, *::before, *::after { box-sizing: border-box; }
-    body { margin:0; font-family: Arial, sans-serif; background:#f4f4f4; }
+    :root{
+      --bg: #fbfbfb;
+      --card: #ffffff;
+      --muted: #6b7280;
+      --text: #0f172a;
+      --accent: #111827;
+      --radius: 10px;
+      --max-width: 920px;
+      --gap: 20px;
+    }
 
-    /* ---- Top toggle button ---- */
+    /* Frutiger-like typography stack: prefer local Frutiger, fall back to Source Sans 3/Inter */
+    body {
+      margin: 0;
+      font-family: "Frutiger", "Source Sans 3", Inter, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      line-height: 1.55;
+      font-size: 16px;
+    }
+
+    /* ---------------- Top toggle button ---------------- */
     #toggleBtn {
       position: fixed;
-      top: 15px;
-      left: 15px;
+      top: 16px;
+      left: 16px;
       z-index: 1001;
-      background: #333;
-      color: #fff;
-      border: none;
-      padding: 10px 14px;
-      font-size: 1.2rem;
+      background: rgba(17,24,39,0.03);
+      color: var(--accent);
+      border: 1px solid rgba(15,23,42,0.06);
+      padding: 10px 12px;
+      font-size: 1.05rem;
       cursor: pointer;
-      border-radius: 4px;
-      transition: background .2s;
+      border-radius: 8px;
+      transition: background .18s, transform .08s;
+      box-shadow: 0 1px 0 rgba(0,0,0,0.02);
     }
-    #toggleBtn:hover { background:#555; }
+    #toggleBtn:hover { background: rgba(17,24,39,0.06); transform: translateY(-1px); }
 
-    /* ---- Sidebar (top) ---- */
+    /* ---------------- Sidebar (top) ---------------- */
     #topSidebar {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      background: #222;
-      color: #fff;
-      padding: 60px 20px 20px;
-      transform: translateY(-100%);
-      transition: transform .35s ease-in-out;
+      background: var(--card);
+      color: var(--text);
+      padding: 56px 18px 20px;
+      transform: translateY(-110%);
+      transition: transform .36s cubic-bezier(.2,.9,.2,1);
       z-index: 1000;
-      box-shadow: 0 4px 8px rgba(0,0,0,.2);
+      box-shadow: 0 8px 24px rgba(15,23,42,0.08);
+      border-bottom: 1px solid rgba(15,23,42,0.03);
     }
     #topSidebar.open { transform: translateY(0); }
 
     /* Close button inside sidebar */
-    #closeBtn {
+    #closeBtn{
       position: absolute;
-      top: 15px;
-      right: 15px;
+      top: 14px;
+      right: 14px;
       background: transparent;
       border: none;
-      color: #fff;
-      font-size: 1.5rem;
+      color: var(--muted);
+      font-size: 1.25rem;
       cursor: pointer;
     }
 
-    /* Sidebar links */
-    #topSidebar ul {
+    /* Sidebar links (centered, airy) */
+    #topSidebar ul{
       list-style: none;
       padding: 0;
-      margin: 0;
+      margin: 8px auto 0 auto;
       display: flex;
       flex-wrap: wrap;
-      gap: 20px;
+      gap: var(--gap);
       justify-content: center;
+      align-items: center;
     }
-    #topSidebar ul li a {
-      color: #fff;
+    #topSidebar ul li a{
+      color: var(--accent);
       text-decoration: none;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       padding: 8px 12px;
-      border-radius: 4px;
-      transition: background .2s;
+      border-radius: 8px;
+      transition: background .14s, color .14s;
     }
-    #topSidebar ul li a:hover { background: rgba(255,255,255,.2); }
+    #topSidebar ul li a:hover{ background: rgba(17,24,39,0.04); color: var(--text); }
 
-    /* Main content (just for demo) */
-    main {
-      padding: 80px 20px 20px;
-      max-width: 900px;
+    /* ---------------- Main content (demo) ---------------- */
+    main{
+      padding: 96px 20px 40px;
+      max-width: var(--max-width);
       margin: 0 auto;
-      line-height: 1.6;
     }
+    main > * { margin-bottom: 1.25rem; }
+    main h1{
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin: 0 0 .5rem 0;
+    }
+    main h2{
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0 0 .5rem 0;
+      color: var(--accent);
+    }
+    main p{ color: var(--muted); margin: 0; }
+
+    /* Slightly lift content on light background for Frutiger-like clarity */
+    .content-card{
+      background: var(--card);
+      padding: 28px;
+      border-radius: var(--radius);
+      box-shadow: 0 6px 18px rgba(15,23,42,0.04);
+      border: 1px solid rgba(15,23,42,0.02);
+    }
+
+    /* Responsive adjustments */
+    @media (min-width: 720px){
+      #topSidebar { padding: 64px 24px 28px; }
+      main { padding-top: 120px; }
+    }
+    /* ---------------- Settings panel ---------------- */
+    #settingsBtn{
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 1001;
+      background: rgba(17,24,39,0.03);
+      color: var(--accent);
+      border: 1px solid rgba(15,23,42,0.06);
+      padding: 8px 10px;
+      font-size: 1.05rem;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background .18s, transform .08s;
+    }
+    #settingsBtn:hover{ background: rgba(17,24,39,0.06); transform: translateY(-1px); }
+
+    #settingsPanel{
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: min(420px, 90vw);
+      background: var(--card);
+      box-shadow: -8px 0 24px rgba(15,23,42,0.08);
+      transform: translateX(110%);
+      transition: transform .28s cubic-bezier(.2,.9,.2,1);
+      z-index: 1200;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    #settingsPanel.open{ transform: translateX(0); }
+    #settingsPanel h3{ margin: 0; font-size: 1.05rem; font-weight: 600; }
+    .settings-row{ display:flex; gap:10px; align-items:center; }
+    .settings-row label{ flex:0 0 110px; color:var(--muted); font-size:0.95rem; }
+    .settings-row input[type="text"]{ flex:1; padding:8px 10px; border-radius:8px; border:1px solid rgba(15,23,42,0.06); }
+    .settings-actions{ margin-top: auto; display:flex; gap:8px; }
+    .btn{ padding:8px 12px; border-radius:8px; border:1px solid rgba(15,23,42,0.06); background:rgba(17,24,39,0.03); cursor:pointer; }
+    .btn.primary{ background: var(--accent); color:#fff; border-color:transparent; }
+    .bg-preview{ height:120px; border-radius:8px; background-size:cover; background-position:center; border:1px solid rgba(15,23,42,0.04); }
   </style>
 </head>
 <body>
 
   <!-- Toggle button (always visible) -->
   <button id="toggleBtn" aria-label="Open menu">☰</button>
+  <!-- Settings button -->
+  <button id="settingsBtn" aria-label="Open settings">⚙︎</button>
 
   <!-- Top sidebar -->
   <nav id="topSidebar" aria-hidden="true">
@@ -111,6 +209,33 @@
     <section id="portfolio"><h2>Portfolio</h2><p>…</p></section>
     <section id="contact"><h2>Contact</h2><p>…</p></section>
   </main>
+
+  <!-- Settings panel (slide-in) -->
+  <aside id="settingsPanel" aria-hidden="true">
+    <h3>Settings</h3>
+    <p style="margin:0;color:var(--muted);font-size:0.95rem;">Customize site appearance. Background changes persist in this browser.</p>
+
+    <div class="settings-row">
+      <label for="bgUrl">Image URL</label>
+      <input id="bgUrl" type="text" placeholder="https://.../image.jpg">
+    </div>
+
+    <div class="settings-row">
+      <label for="bgFile">Upload</label>
+      <input id="bgFile" type="file" accept="image/*">
+    </div>
+
+    <div class="settings-row">
+      <label>Preview</label>
+      <div id="bgPreview" class="bg-preview" aria-hidden="true"></div>
+    </div>
+
+    <div class="settings-actions">
+      <button id="saveSettings" class="btn primary">Save</button>
+      <button id="clearSettings" class="btn">Reset</button>
+      <button id="closeSettings" class="btn">Close</button>
+    </div>
+  </aside>
 
   <script>
     const toggleBtn = document.getElementById('toggleBtn');
@@ -141,6 +266,110 @@
     sidebar.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', closeSidebar);
     });
+
+    /* ---------------- Settings behavior ---------------- */
+    const settingsBtn = document.getElementById('settingsBtn');
+    const settingsPanel = document.getElementById('settingsPanel');
+    const closeSettings = document.getElementById('closeSettings');
+    const saveSettings = document.getElementById('saveSettings');
+    const clearSettings = document.getElementById('clearSettings');
+    const bgUrlInput = document.getElementById('bgUrl');
+    const bgFileInput = document.getElementById('bgFile');
+    const bgPreview = document.getElementById('bgPreview');
+
+    const STORAGE_KEY = 'site:settings';
+
+    function openSettings(){
+      settingsPanel.classList.add('open');
+      settingsPanel.setAttribute('aria-hidden','false');
+    }
+    function closeSettingsPanel(){
+      settingsPanel.classList.remove('open');
+      settingsPanel.setAttribute('aria-hidden','true');
+    }
+
+    settingsBtn.addEventListener('click', () => {
+      settingsPanel.classList.contains('open') ? closeSettingsPanel() : openSettings();
+    });
+    closeSettings.addEventListener('click', closeSettingsPanel);
+
+    // Load settings from localStorage
+    function loadSettings(){
+      try{
+        const json = localStorage.getItem(STORAGE_KEY);
+        if(!json) return;
+        const cfg = JSON.parse(json);
+        if(cfg && cfg.background){
+          applyBackground(cfg.background);
+          bgPreview.style.backgroundImage = `url(${cfg.background})`;
+          bgUrlInput.value = cfg.background;
+        }
+      }catch(e){ console.warn('Failed to load settings', e); }
+    }
+
+    function saveSettingsToStorage(bg){
+      const cfg = { background: bg || null };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(cfg));
+    }
+
+    function applyBackground(url){
+      if(!url){
+        document.body.style.backgroundImage = '';
+        document.body.style.backgroundColor = 'var(--bg)';
+        document.body.style.backgroundSize = '';
+        document.body.style.backgroundPosition = '';
+        return;
+      }
+      document.body.style.backgroundImage = `url(${url})`;
+      document.body.style.backgroundSize = 'cover';
+      document.body.style.backgroundPosition = 'center';
+      document.body.style.backgroundRepeat = 'no-repeat';
+    }
+
+    // Save button: reads URL field (preferred) or file data URL
+    saveSettings.addEventListener('click', async () => {
+      let url = bgUrlInput.value.trim();
+      if(!url && bgFileInput.files && bgFileInput.files[0]){
+        // convert file to data URL
+        const file = bgFileInput.files[0];
+        url = await new Promise((res, rej) => {
+          const r = new FileReader();
+          r.onload = () => res(r.result);
+          r.onerror = rej;
+          r.readAsDataURL(file);
+        });
+      }
+      applyBackground(url || null);
+      bgPreview.style.backgroundImage = url ? `url(${url})` : '';
+      saveSettingsToStorage(url || null);
+    });
+
+    // Clear settings
+    clearSettings.addEventListener('click', () => {
+      bgUrlInput.value = '';
+      bgFileInput.value = '';
+      bgPreview.style.backgroundImage = '';
+      applyBackground(null);
+      localStorage.removeItem(STORAGE_KEY);
+    });
+
+    // Live preview when entering URL
+    bgUrlInput.addEventListener('input', () => {
+      const v = bgUrlInput.value.trim();
+      bgPreview.style.backgroundImage = v ? `url(${v})` : '';
+    });
+
+    // Live preview when selecting file
+    bgFileInput.addEventListener('change', () => {
+      const f = bgFileInput.files && bgFileInput.files[0];
+      if(!f){ bgPreview.style.backgroundImage = ''; return; }
+      const r = new FileReader();
+      r.onload = () => { bgPreview.style.backgroundImage = `url(${r.result})`; };
+      r.readAsDataURL(f);
+    });
+
+    // initialize
+    loadSettings();
   </script>
 </body>
 </html>
