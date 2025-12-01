@@ -1,0 +1,55 @@
+# id	English	Japanese
+home	Home	ホーム
+homeOverview Proxy プロキシ(ブロック解除)
+homeFeatures Features	機能
+about	About	について
+aboutTeam	Team	チーム
+aboutHistory	History	歴史
+services	Services	サービス
+servicesConsulting	Consulting	コンサルティング
+servicesDevelopment	Development	開発
+portfolio	Portfolio	ポートフォリオ
+portfolioProjects	Projects	プロジェクト
+portfolioCaseStudies	Case studies	ケーススタディ
+contact	Contact	お問い合わせ
+contactGetInTouch	Get in touch	ご連絡
+contactLocations	Locations	拠点
+homeTitle	Welcome	ようこそ
+openMenu	Open menu	メニューを開く
+closeMenu	Close menu	メニューを閉じる
+openSettings	Open settings	設定を開く
+closeSettings	Close settings	設定を閉じる
+settings	Settings	設定
+customize	Customize site appearance. Background changes persist in this browser.	サイトの見た目をカスタマイズします。変更はこのブラウザに保存されます。
+bgUrl	Image URL	画像URL
+upload	Upload	アップロード
+menuOpacity	Menu opacity	メニューの透明度
+favicon	Favicon	ファビコン
+siteTitle	Site title	サイトタイトル
+titlePresets	Title presets	タイトルプリセット
+icons	Icons	アイコン
+menuIcon	Menu icon URL	メニューアイコンURL
+settingsIcon	Settings icon URL	設定アイコンURL
+preview	Preview	プレビュー
+presetIcons	Preset icons	プリセットアイコン
+menuPresets	Menu presets	メニュープリセット
+settingsPresets	Settings presets	設定プリセット
+faviconPresets	Favicon presets	ファビコンプリセット
+backgroundPresets	Background presets	背景プリセット
+theme	Theme	テーマ
+textColor	Text color	テキスト色
+accentColor	Accent color	アクセント色
+buttonStyle	Button style	ボタンスタイル
+font	Font	フォント
+language	Language	言語
+save	Save	保存
+reset	Reset	リセット
+close	Close	閉じる
+faviconUrlLabel	Favicon URL	ファビコンURL
+bgFileLabel	Upload	アップロード
+toggleIconFileLabel	Upload	アップロード
+settingsIconFileLabel	Upload	アップロード
+menuIconAlt	menu icon	メニューアイコン
+settingsIconAlt	settings icon	設定アイコン
+faviconPreviewAlt	favicon preview	ファビコンプレビュー
+reloadTranslations	Reload translations	翻訳を再読み込み

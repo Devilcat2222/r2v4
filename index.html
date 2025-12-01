@@ -309,47 +309,47 @@
 </head>
 <body>
   <!-- Toggle button (always visible) -->
-  <button id="toggleBtn" aria-label="Open menu" aria-pressed="false"><img id="toggleIcon" alt="menu icon"></button>
+  <button id="toggleBtn" aria-pressed="false"><img id="toggleIcon" alt="menu icon"></button>
   <!-- Settings button -->
-  <button id="settingsBtn" aria-label="Open settings"><img id="settingsIcon" alt="settings icon"></button>
+  <button id="settingsBtn"><img id="settingsIcon" alt="settings icon"></button>
 
   <!-- Top sidebar -->
   <nav id="topSidebar" aria-hidden="true">
-    <button id="closeBtn" aria-label="Close menu">✕</button>
+    <button id="closeBtn">✕</button>
     <ul>
       <li class="nav-item">
-        <button class="nav-toggle" aria-expanded="false">Home</button>
+        <button id="navHome" class="nav-toggle" aria-expanded="false" data-i18n="home">ホーム</button>
         <div class="submenu" aria-hidden="true">
-          <a href="#home">Overview</a>
-          <a href="#home-features">Features</a>
+          <a id="navHomeOverview" href="#home" data-i18n="homeOverview">概要</a>
+          <a id="navHomeFeatures" href="#home-features" data-i18n="homeFeatures">機能</a>
         </div>
       </li>
       <li class="nav-item">
-        <button class="nav-toggle" aria-expanded="false">About</button>
+        <button id="navAbout" class="nav-toggle" aria-expanded="false" data-i18n="about">について</button>
         <div class="submenu" aria-hidden="true">
-          <a href="#team">Team</a>
-          <a href="#history">History</a>
+          <a id="navAboutTeam" href="#team" data-i18n="aboutTeam">チーム</a>
+          <a id="navAboutHistory" href="#history" data-i18n="aboutHistory">歴史</a>
         </div>
       </li>
       <li class="nav-item">
-        <button class="nav-toggle" aria-expanded="false">Services</button>
+        <button id="navServices" class="nav-toggle" aria-expanded="false" data-i18n="services">サービス</button>
         <div class="submenu" aria-hidden="true">
-          <a href="#consulting">Consulting</a>
-          <a href="#development">Development</a>
+          <a id="navServicesConsulting" href="#consulting" data-i18n="servicesConsulting">コンサルティング</a>
+          <a id="navServicesDevelopment" href="#development" data-i18n="servicesDevelopment">開発</a>
         </div>
       </li>
       <li class="nav-item">
-        <button class="nav-toggle" aria-expanded="false">Portfolio</button>
+        <button id="navPortfolio" class="nav-toggle" aria-expanded="false" data-i18n="portfolio">ポートフォリオ</button>
         <div class="submenu" aria-hidden="true">
-          <a href="#projects">Projects</a>
-          <a href="#case-studies">Case studies</a>
+          <a id="navPortfolioProjects" href="#projects" data-i18n="portfolioProjects">プロジェクト</a>
+          <a id="navPortfolioCaseStudies" href="#case-studies" data-i18n="portfolioCaseStudies">ケーススタディ</a>
         </div>
       </li>
       <li class="nav-item">
-        <button class="nav-toggle" aria-expanded="false">Contact</button>
+        <button id="navContact" class="nav-toggle" aria-expanded="false" data-i18n="contact">お問い合わせ</button>
         <div class="submenu" aria-hidden="true">
-          <a href="#contact-form">Get in touch</a>
-          <a href="#locations">Locations</a>
+          <a id="navContactGetInTouch" href="#contact-form" data-i18n="contactGetInTouch">ご連絡</a>
+          <a id="navContactLocations" href="#locations" data-i18n="contactLocations">拠点</a>
         </div>
       </li>
     </ul>
@@ -357,145 +357,314 @@
 
   <!-- Demo content -->
   <main>
-  <h1>Welcome to My Si</h1>
+  <h1 id="mainTitle" data-i18n="homeTitle">ようこそ</h1>
 
-  <section id="home"><h2>Home</h2></section>
+  <section id="home"><h2>ホーム</h2></section>
   </main>
 
   <!-- Settings panel (slide-in) -->
   <aside id="settingsPanel" aria-hidden="true">
-    <h3>Settings</h3>
-    <p style="margin:0;color:var(--muted);font-size:0.95rem;">Customize site appearance. Background changes persist in this browser.</p>
+    <h3>設定</h3>
+    <p style="margin:0;color:var(--muted);font-size:0.95rem;">サイトの外観をカスタマイズします。背景の変更はこのブラウザに保存されます。</p>
 
-    <button id="settingsCloseTop" aria-label="Close settings" class="btn">✕</button>
+    <button id="settingsCloseTop" class="btn">✕</button>
 
     <div class="settings-inner">
-      <div style="font-weight:600;color:var(--muted);font-size:0.95rem;margin-top:8px;">Theme</div>
+      <!-- language selector removed -->
+
+    <hr style="border:none;border-top:1px solid rgba(15,23,42,0.04);margin:6px 0;">
+
+    <div style="font-weight:600;color:var(--muted);font-size:0.95rem;margin-top:8px;" data-i18n="theme">テーマ</div>
       <div class="settings-row">
-        <label for="textColor">Text color</label>
+        <label for="textColor" data-i18n="textColor">テキスト色</label>
         <input id="textColor" type="color" value="#0f172a">
       </div>
       <div class="settings-row">
-        <label for="accentColor">Accent color</label>
+        <label for="accentColor" data-i18n="accentColor">アクセント色</label>
         <input id="accentColor" type="color" value="#111827">
       </div>
       <div class="settings-row">
-        <label for="buttonStyle">Button style</label>
+        <label for="buttonStyle" data-i18n="buttonStyle">ボタンスタイル</label>
         <select id="buttonStyle">
-          <option value="default">Default</option>
-          <option value="flat">Flat</option>
-          <option value="pill">Pill</option>
+          <option value="default">デフォルト</option>
+          <option value="flat">フラット</option>
+          <option value="pill">ピル型</option>
         </select>
       </div>
       <div class="settings-row">
-        <label for="fontSelect">Font</label>
+        <label for="fontSelect" data-i18n="font">フォント</label>
         <select id="fontSelect">
           <option value="Frutiger, 'Source Sans 3', Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial">Frutiger / Source Sans</option>
           <option value="'Source Sans 3', Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial">Source Sans 3</option>
           <option value="Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial">Inter</option>
-          <option value="Georgia, 'Times New Roman', Times, serif">Serif (Georgia)</option>
+          <option value="Georgia, 'Times New Roman', Times, serif">セリフ (Georgia)</option>
         </select>
       </div>
       <div class="settings-row">
-      <label for="bgUrl">Image URL</label>
+      <label for="bgUrl" data-i18n="bgUrl">画像URL</label>
       <input id="bgUrl" type="text" placeholder="https://.../image.jpg">
     </div>
 
     <div class="settings-row">
-      <label for="toggleOpacity">Menu opacity</label>
+      <label for="toggleOpacity" data-i18n="menuOpacity">メニュー不透明度</label>
       <input id="toggleOpacity" type="range" min="0" max="1" step="0.01" value="0.03">
       <div style="width:48px;text-align:right;color:var(--muted);font-size:0.95rem;" id="toggleOpacityVal">0.03</div>
     </div>
 
     <div class="settings-row">
-      <label for="bgFile">Upload</label>
+      <label for="bgFile" data-i18n="upload">アップロード</label>
       <input id="bgFile" type="file" accept="image/*">
     </div>
 
     <hr style="border:none;border-top:1px solid rgba(15,23,42,0.04);margin:6px 0;">
 
-    <div style="font-weight:600;color:var(--muted);font-size:0.95rem;">Favicon</div>
+    <div style="font-weight:600;color:var(--muted);font-size:0.95rem;" data-i18n="favicon">ファビコン</div>
     <div class="settings-row">
-      <label for="faviconUrl">Favicon URL</label>
+      <label for="faviconUrl" data-i18n="faviconUrlLabel">ファビコンURL</label>
       <input id="faviconUrl" type="text" placeholder="https://.../favicon.ico">
       <div class="icon-preview" id="faviconPreview"><img alt="favicon preview" id="faviconPreviewImg"></div>
     </div>
     <div class="settings-row">
-      <label for="faviconFile">Upload</label>
+      <label for="faviconFile" data-i18n="bgFileLabel">アップロード</label>
       <input id="faviconFile" type="file" accept="image/*">
     </div>
 
     <div class="settings-row">
-      <label for="siteTitle">Site title</label>
-      <input id="siteTitle" type="text" placeholder="Site title">
+      <label for="siteTitle" data-i18n="siteTitle">サイトタイトル</label>
+      <input id="siteTitle" type="text" placeholder="サイトタイトル">
     </div>
 
-    <div style="font-weight:600;color:var(--muted);font-size:0.95rem;margin-top:8px;">Title presets</div>
+    <div style="font-weight:600;color:var(--muted);font-size:0.95rem;margin-top:8px;" data-i18n="titlePresets">タイトルプリセット</div>
     <div id="titlePresets" style="display:flex;gap:8px;flex-wrap:wrap;padding:6px;border-radius:8px;border:1px solid rgba(15,23,42,0.03);"></div>
 
     <hr style="border:none;border-top:1px solid rgba(15,23,42,0.04);margin:6px 0;">
 
-    <div style="font-weight:600;color:var(--muted);font-size:0.95rem;">Icons</div>
+    <div style="font-weight:600;color:var(--muted);font-size:0.95rem;" data-i18n="icons">アイコン</div>
 
     <div class="settings-row">
-      <label for="toggleIconUrl">Menu icon URL</label>
+      <label for="toggleIconUrl" data-i18n="menuIcon">メニューアイコンURL</label>
       <input id="toggleIconUrl" type="text" placeholder="https://.../icon.png">
       <div class="icon-preview" id="toggleIconPreview"><img alt="menu preview" id="toggleIconPreviewImg"></div>
     </div>
 
     <div class="settings-row">
-      <label for="toggleIconFile">Upload</label>
+      <label for="toggleIconFile" data-i18n="toggleIconFileLabel">アップロード</label>
       <input id="toggleIconFile" type="file" accept="image/*">
     </div>
 
     <div class="settings-row">
-      <label for="settingsIconUrl">Settings icon URL</label>
+      <label for="settingsIconUrl" data-i18n="settingsIcon">設定アイコンURL</label>
       <input id="settingsIconUrl" type="text" placeholder="https://.../icon.png">
       <div class="icon-preview" id="settingsIconPreview"><img alt="settings preview" id="settingsIconPreviewImg"></div>
     </div>
 
     <div class="settings-row">
-      <label for="settingsIconFile">Upload</label>
+      <label for="settingsIconFile" data-i18n="settingsIconFileLabel">アップロード</label>
       <input id="settingsIconFile" type="file" accept="image/*">
     </div>
 
     <div class="settings-row">
-      <label>Preview</label>
+      <label data-i18n="preview">プレビュー</label>
       <div id="bgPreview" class="bg-preview" aria-hidden="true"></div>
     </div>
 
-    <div style="font-weight:600;color:var(--muted);font-size:0.95rem;">Preset icons</div>
+    <div style="font-weight:600;color:var(--muted);font-size:0.95rem;" data-i18n="presetIcons">プリセットアイコン</div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;">
       <div style="flex:1;min-width:220px;">
-        <div style="font-size:0.95rem;color:var(--muted);margin-bottom:6px;">Menu presets</div>
+        <div style="font-size:0.95rem;color:var(--muted);margin-bottom:6px;" data-i18n="menuPresets">メニュープリセット</div>
         <div id="menuPresets" style="display:flex;gap:8px;flex-wrap:wrap;
           background:transparent;padding:6px;border-radius:8px;border:1px solid rgba(15,23,42,0.03);
         "></div>
       </div>
       <div style="flex:1;min-width:220px;">
-        <div style="font-size:0.95rem;color:var(--muted);margin-bottom:6px;">Settings presets</div>
+        <div style="font-size:0.95rem;color:var(--muted);margin-bottom:6px;" data-i18n="settingsPresets">設定プリセット</div>
         <div id="settingsPresets" style="display:flex;gap:8px;flex-wrap:wrap;
           background:transparent;padding:6px;border-radius:8px;border:1px solid rgba(15,23,42,0.03);
         "></div>
       </div>
     </div>
 
-      <div style="font-weight:600;color:var(--muted);font-size:0.95rem;margin-top:8px;">Favicon presets</div>
+      <div style="font-weight:600;color:var(--muted);font-size:0.95rem;margin-top:8px;" data-i18n="faviconPresets">ファビコンプリセット</div>
       <div id="faviconPresets" style="display:flex;gap:8px;flex-wrap:wrap;padding:6px;border-radius:8px;border:1px solid rgba(15,23,42,0.03);"></div>
 
-      <div style="font-weight:600;color:var(--muted);font-size:0.95rem;margin-top:8px;">Background presets</div>
+      <div style="font-weight:600;color:var(--muted);font-size:0.95rem;margin-top:8px;" data-i18n="backgroundPresets">背景プリセット</div>
       <div id="bgPresets" style="display:flex;gap:8px;flex-wrap:wrap;padding:6px;border-radius:8px;border:1px solid rgba(15,23,42,0.03);"></div>
-
+      
+    <hr style="border:none;border-top:1px solid rgba(15,23,42,0.04);margin:6px 0;">
+    <div style="font-weight:600;color:var(--muted);font-size:0.95rem;margin-top:8px;">ナビゲーション (Navigation)</div>
+    <div style="font-size:0.95rem;color:var(--muted);margin:6px 0;">トップバーのラベルとリンクをここで編集できます。</div>
+    <div id="navEditor" style="display:flex;flex-direction:column;gap:8px;padding:6px;border-radius:8px;border:1px solid rgba(15,23,42,0.03);">
+      <!-- Home -->
+      <div class="settings-row">
+        <label for="nav_home_label">Home label</label>
+        <input id="nav_home_label" type="text" placeholder="Home">
+      </div>
+      <div class="settings-row">
+        <label for="nav_home_sub1_label">Home sub1</label>
+        <input id="nav_home_sub1_label" type="text" placeholder="Overview">
+        <input id="nav_home_sub1_url" type="text" placeholder="#home">
+      </div>
+      <div class="settings-row">
+        <label for="nav_home_sub2_label">Home sub2</label>
+        <input id="nav_home_sub2_label" type="text" placeholder="Features">
+        <input id="nav_home_sub2_url" type="text" placeholder="#home-features">
+      </div>
+      <!-- About -->
+      <div class="settings-row">
+        <label for="nav_about_label">About label</label>
+        <input id="nav_about_label" type="text" placeholder="About">
+      </div>
+      <div class="settings-row">
+        <label for="nav_about_sub1_label">About sub1</label>
+        <input id="nav_about_sub1_label" type="text" placeholder="Team">
+        <input id="nav_about_sub1_url" type="text" placeholder="#team">
+      </div>
+      <div class="settings-row">
+        <label for="nav_about_sub2_label">About sub2</label>
+        <input id="nav_about_sub2_label" type="text" placeholder="History">
+        <input id="nav_about_sub2_url" type="text" placeholder="#history">
+      </div>
+      <!-- Services -->
+      <div class="settings-row">
+        <label for="nav_services_label">Services label</label>
+        <input id="nav_services_label" type="text" placeholder="Services">
+      </div>
+      <div class="settings-row">
+        <label for="nav_services_sub1_label">Services sub1</label>
+        <input id="nav_services_sub1_label" type="text" placeholder="Consulting">
+        <input id="nav_services_sub1_url" type="text" placeholder="#consulting">
+      </div>
+      <div class="settings-row">
+        <label for="nav_services_sub2_label">Services sub2</label>
+        <input id="nav_services_sub2_label" type="text" placeholder="Development">
+        <input id="nav_services_sub2_url" type="text" placeholder="#development">
+      </div>
+      <!-- Portfolio -->
+      <div class="settings-row">
+        <label for="nav_portfolio_label">Portfolio label</label>
+        <input id="nav_portfolio_label" type="text" placeholder="Portfolio">
+      </div>
+      <div class="settings-row">
+        <label for="nav_portfolio_sub1_label">Portfolio sub1</label>
+        <input id="nav_portfolio_sub1_label" type="text" placeholder="Projects">
+        <input id="nav_portfolio_sub1_url" type="text" placeholder="#projects">
+      </div>
+      <div class="settings-row">
+        <label for="nav_portfolio_sub2_label">Portfolio sub2</label>
+        <input id="nav_portfolio_sub2_label" type="text" placeholder="Case studies">
+        <input id="nav_portfolio_sub2_url" type="text" placeholder="#case-studies">
+      </div>
+      <!-- Contact -->
+      <div class="settings-row">
+        <label for="nav_contact_label">Contact label</label>
+        <input id="nav_contact_label" type="text" placeholder="Contact">
+      </div>
+      <div class="settings-row">
+        <label for="nav_contact_sub1_label">Contact sub1</label>
+        <input id="nav_contact_sub1_label" type="text" placeholder="Get in touch">
+        <input id="nav_contact_sub1_url" type="text" placeholder="#contact-form">
+      </div>
+      <div class="settings-row">
+        <label for="nav_contact_sub2_label">Contact sub2</label>
+        <input id="nav_contact_sub2_label" type="text" placeholder="Locations">
+        <input id="nav_contact_sub2_url" type="text" placeholder="#locations">
+      </div>
+    </div>
+    <hr style="border:none;border-top:1px solid rgba(15,23,42,0.04);margin:6px 0;">
+    <div style="font-weight:600;color:var(--muted);font-size:0.95rem;margin-top:8px;">Label Editor</div>
+    <div id="labelEditor" style="display:flex;flex-direction:column;gap:8px;padding:6px;border-radius:8px;border:1px solid rgba(15,23,42,0.03);">
+      <div class="settings-row">
+        <label for="lbl_save_label">Save button</label>
+        <input id="lbl_save_label" type="text" placeholder="Save">
+      </div>
+      <div class="settings-row">
+        <label for="lbl_reset_label">Reset button</label>
+        <input id="lbl_reset_label" type="text" placeholder="Reset">
+      </div>
+      <div class="settings-row">
+        <label for="lbl_close_label">Close button</label>
+        <input id="lbl_close_label" type="text" placeholder="Close">
+      </div>
+    </div>
     </div> <!-- .settings-inner -->
 
     <div class="settings-actions">
-      <button id="saveSettings" class="btn primary">Save</button>
-      <button id="clearSettings" class="btn">Reset</button>
-      <button id="closeSettings" class="btn">Close</button>
+      <button id="saveSettings" class="btn primary">保存</button>
+      <button id="clearSettings" class="btn">リセット</button>
+      <button id="closeSettings" class="btn">閉じる</button>
     </div>
   </aside>
 
   <script>
+    // translation system removed. default static labels are used and navigation labels are editable via settings.
+    // Apply UI labels and nav links from stored settings or defaults
+    const DEFAULT_NAV = {
+      home: { label: 'Home', url: '#home', subs: [{label:'Overview', url:'#home'}, {label:'Features', url:'#home-features'}] },
+      about: { label: 'About', url: '#about', subs: [{label:'Team', url:'#team'}, {label:'History', url:'#history'}] },
+      services: { label: 'Services', url: '#services', subs: [{label:'Consulting', url:'#consulting'}, {label:'Development', url:'#development'}] },
+      portfolio: { label: 'Portfolio', url: '#portfolio', subs: [{label:'Projects', url:'#projects'}, {label:'Case studies', url:'#case-studies'}] },
+      contact: { label: 'Contact', url: '#contact-form', subs: [{label:'Get in touch', url:'#contact-form'}, {label:'Locations', url:'#locations'}] },
+    };
+
+    function applyLabels(){
+      // load settings nav from localStorage (if any)
+      let cfg = {};
+      try{ cfg = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}') || {}; }catch(e){ cfg = {}; }
+      const navCfg = (cfg.nav) ? cfg.nav : DEFAULT_NAV;
+      // apply main title
+      const h1 = document.querySelector('main h1');
+      if(h1 && cfg.title) h1.textContent = cfg.title; else if(h1) h1.textContent = DEFAULT_NAV.home.label;
+      // apply nav labels and hrefs
+      const map = ['home','about','services','portfolio','contact'];
+      map.forEach(key => {
+        const item = navCfg[key] || DEFAULT_NAV[key];
+        const btn = document.getElementById('nav' + key[0].toUpperCase() + key.slice(1));
+        if(btn && item) btn.textContent = item.label || DEFAULT_NAV[key].label;
+        const submenu = document.getElementById('nav' + key[0].toUpperCase() + key.slice(1)); // not used for hrefs
+        // apply links for subitems
+        try{
+          const container = document.querySelector('#' + 'nav' + key[0].toUpperCase() + key.slice(1) + ' ~ .submenu');
+        }catch(e){}
+      });
+      // quick pass for each submenu link by known ids
+      ['Home','About','Services','Portfolio','Contact'].forEach((name, idx) => {
+        const key = map[idx];
+        const item = navCfg[key] || DEFAULT_NAV[key];
+        // top-level link is button (no href), but sublinks have specific ids
+        if(item && item.subs){
+          item.subs.forEach((s, i) => {
+            const subEl = document.getElementById(`nav${key[0].toUpperCase() + key.slice(1)}${i===0? (key==='home'?'Overview': (key==='about'?'Team':'Consulting')) : (i===1? (key==='home'?'Features': (key==='about'?'History':'Development')) : '')}`);
+            // fallback to known ids we created earlier
+          });
+        }
+      });
+      // apply hrefs for submenu items using explicit IDs
+      // Home
+      const navHomeOverview = document.getElementById('navHomeOverview'); if(navHomeOverview){ navHomeOverview.href = (navCfg.home && navCfg.home.subs && navCfg.home.subs[0] && navCfg.home.subs[0].url) || '#home'; }
+      const navHomeFeatures = document.getElementById('navHomeFeatures'); if(navHomeFeatures){ navHomeFeatures.href = (navCfg.home && navCfg.home.subs && navCfg.home.subs[1] && navCfg.home.subs[1].url) || '#home-features'; }
+      // About
+      const navAboutTeam = document.getElementById('navAboutTeam'); if(navAboutTeam){ navAboutTeam.href = (navCfg.about && navCfg.about.subs && navCfg.about.subs[0] && navCfg.about.subs[0].url) || '#team'; }
+      const navAboutHistory = document.getElementById('navAboutHistory'); if(navAboutHistory){ navAboutHistory.href = (navCfg.about && navCfg.about.subs && navCfg.about.subs[1] && navCfg.about.subs[1].url) || '#history'; }
+      // Services
+      const navServicesConsulting = document.getElementById('navServicesConsulting'); if(navServicesConsulting){ navServicesConsulting.href = (navCfg.services && navCfg.services.subs && navCfg.services.subs[0] && navCfg.services.subs[0].url) || '#consulting'; }
+      const navServicesDevelopment = document.getElementById('navServicesDevelopment'); if(navServicesDevelopment){ navServicesDevelopment.href = (navCfg.services && navCfg.services.subs && navCfg.services.subs[1] && navCfg.services.subs[1].url) || '#development'; }
+      // Portfolio
+      const navPortfolioProjects = document.getElementById('navPortfolioProjects'); if(navPortfolioProjects){ navPortfolioProjects.href = (navCfg.portfolio && navCfg.portfolio.subs && navCfg.portfolio.subs[0] && navCfg.portfolio.subs[0].url) || '#projects'; }
+      const navPortfolioCaseStudies = document.getElementById('navPortfolioCaseStudies'); if(navPortfolioCaseStudies){ navPortfolioCaseStudies.href = (navCfg.portfolio && navCfg.portfolio.subs && navCfg.portfolio.subs[1] && navCfg.portfolio.subs[1].url) || '#case-studies'; }
+      // Contact
+      const navContactGetInTouch = document.getElementById('navContactGetInTouch'); if(navContactGetInTouch){ navContactGetInTouch.href = (navCfg.contact && navCfg.contact.subs && navCfg.contact.subs[0] && navCfg.contact.subs[0].url) || '#contact-form'; }
+      const navContactLocations = document.getElementById('navContactLocations'); if(navContactLocations){ navContactLocations.href = (navCfg.contact && navCfg.contact.subs && navCfg.contact.subs[1] && navCfg.contact.subs[1].url) || '#locations'; }
+      // set aria-labels to sensible defaults
+      const tBtn = document.getElementById('toggleBtn'); if(tBtn) tBtn.setAttribute('aria-label', 'Open menu');
+      const sBtn = document.getElementById('settingsBtn'); if(sBtn) sBtn.setAttribute('aria-label', 'Open settings');
+      const cBtn = document.getElementById('closeBtn'); if(cBtn) cBtn.setAttribute('aria-label', 'Close menu');
+      const scTop = document.getElementById('settingsCloseTop'); if(scTop) scTop.setAttribute('aria-label', 'Close settings');
+      // alt texts
+      if(toggleIconEl) toggleIconEl.alt = 'menu icon';
+      if(settingsIconEl) settingsIconEl.alt = 'settings icon';
+      if(faviconPreviewImg) faviconPreviewImg.alt = 'favicon preview';
+    }
+      // Legacy text update logic removed, applyLabels() manages nav & text
     const toggleBtn = document.getElementById('toggleBtn');
     const closeBtn   = document.getElementById('closeBtn');
     const sidebar    = document.getElementById('topSidebar');
@@ -504,14 +673,14 @@
       sidebar.classList.add('open');
       sidebar.setAttribute('aria-hidden', 'false');
       toggleBtn.setAttribute('aria-pressed', 'true');
-      toggleBtn.setAttribute('aria-label', 'Close menu');
+      if(toggleBtn) toggleBtn.setAttribute('aria-label', 'Close menu');
     }
 
     function closeSidebar() {
       sidebar.classList.remove('open');
       sidebar.setAttribute('aria-hidden', 'true');
       toggleBtn.setAttribute('aria-pressed', 'false');
-      toggleBtn.setAttribute('aria-label', 'Open menu');
+      if(toggleBtn) toggleBtn.setAttribute('aria-label', 'Open menu');
     }
 
     toggleBtn.addEventListener('click', () => {
@@ -574,12 +743,47 @@
     const accentColorInput = document.getElementById('accentColor');
     const buttonStyleSelect = document.getElementById('buttonStyle');
     const fontSelect = document.getElementById('fontSelect');
+    // language selector removed
     const siteTitleInput = (function(){ try{return document.getElementById('siteTitle')}catch(e){return null;} })();
     const titlePresetsContainer = (function(){ try{return document.getElementById('titlePresets')}catch(e){return null;} })();
     const toggleIconPreviewImg = document.getElementById('toggleIconPreviewImg');
     const settingsIconUrl = document.getElementById('settingsIconUrl');
     const settingsIconFile = document.getElementById('settingsIconFile');
     const settingsIconPreviewImg = document.getElementById('settingsIconPreviewImg');
+    // Label editor inputs
+    const lbl_save_label = document.getElementById('lbl_save_label');
+    const lbl_reset_label = document.getElementById('lbl_reset_label');
+    const lbl_close_label = document.getElementById('lbl_close_label');
+    // Nav editor inputs
+    const nav_home_label = document.getElementById('nav_home_label');
+    const nav_home_sub1_label = document.getElementById('nav_home_sub1_label');
+    const nav_home_sub1_url = document.getElementById('nav_home_sub1_url');
+    const nav_home_sub2_label = document.getElementById('nav_home_sub2_label');
+    const nav_home_sub2_url = document.getElementById('nav_home_sub2_url');
+
+    const nav_about_label = document.getElementById('nav_about_label');
+    const nav_about_sub1_label = document.getElementById('nav_about_sub1_label');
+    const nav_about_sub1_url = document.getElementById('nav_about_sub1_url');
+    const nav_about_sub2_label = document.getElementById('nav_about_sub2_label');
+    const nav_about_sub2_url = document.getElementById('nav_about_sub2_url');
+
+    const nav_services_label = document.getElementById('nav_services_label');
+    const nav_services_sub1_label = document.getElementById('nav_services_sub1_label');
+    const nav_services_sub1_url = document.getElementById('nav_services_sub1_url');
+    const nav_services_sub2_label = document.getElementById('nav_services_sub2_label');
+    const nav_services_sub2_url = document.getElementById('nav_services_sub2_url');
+
+    const nav_portfolio_label = document.getElementById('nav_portfolio_label');
+    const nav_portfolio_sub1_label = document.getElementById('nav_portfolio_sub1_label');
+    const nav_portfolio_sub1_url = document.getElementById('nav_portfolio_sub1_url');
+    const nav_portfolio_sub2_label = document.getElementById('nav_portfolio_sub2_label');
+    const nav_portfolio_sub2_url = document.getElementById('nav_portfolio_sub2_url');
+
+    const nav_contact_label = document.getElementById('nav_contact_label');
+    const nav_contact_sub1_label = document.getElementById('nav_contact_sub1_label');
+    const nav_contact_sub1_url = document.getElementById('nav_contact_sub1_url');
+    const nav_contact_sub2_label = document.getElementById('nav_contact_sub2_label');
+    const nav_contact_sub2_url = document.getElementById('nav_contact_sub2_url');
 
   // set immediate defaults so buttons show icons before settings load
   toggleIconEl.src = DEFAULT_TOGGLE_ICON;
@@ -592,7 +796,17 @@
   if(textColorInput) textColorInput.addEventListener('input', (e) => document.documentElement.style.setProperty('--text', e.target.value));
   if(accentColorInput) accentColorInput.addEventListener('input', (e) => document.documentElement.style.setProperty('--accent', e.target.value));
   if(buttonStyleSelect) buttonStyleSelect.addEventListener('change', (e) => document.documentElement.setAttribute('data-button-style', e.target.value));
-  if(fontSelect) fontSelect.addEventListener('change', (e) => document.body.style.fontFamily = e.target.value);
+  if(fontSelect) fontSelect.addEventListener('change', (e) => {
+    const sel = e.target.value || '';
+    // if sel already contains comma assume it's a full stack
+    if(sel.includes(',')){
+      document.body.style.fontFamily = sel;
+    } else if(sel){
+      // use selected family name with fallback stack
+      document.body.style.fontFamily = `"${sel}", Frutiger, 'Source Sans 3', Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif`;
+    }
+  });
+  // language selector removed
 
     const toggleOpacity = document.getElementById('toggleOpacity');
     const toggleOpacityVal = document.getElementById('toggleOpacityVal');
@@ -600,10 +814,12 @@
     function openSettings(){
       settingsPanel.classList.add('open');
       settingsPanel.setAttribute('aria-hidden','false');
+      if(settingsBtn) settingsBtn.setAttribute('aria-label', 'Close settings');
     }
     function closeSettingsPanel(){
       settingsPanel.classList.remove('open');
       settingsPanel.setAttribute('aria-hidden','true');
+      if(settingsBtn) settingsBtn.setAttribute('aria-label', 'Open settings');
     }
 
     settingsBtn.addEventListener('click', () => {
@@ -682,9 +898,43 @@
             if(buttonStyleSelect) buttonStyleSelect.value = cfg.buttonStyle;
           }
           if(cfg.font){
-            document.body.style.fontFamily = cfg.font;
-            if(fontSelect) fontSelect.value = cfg.font;
+            // if cfg.font contains a comma, assume it's a full stack string
+            if(cfg.font.indexOf(',') !== -1){
+              document.body.style.fontFamily = cfg.font;
+              if(fontSelect) fontSelect.value = cfg.font;
+            } else {
+              // if it's a single family name, use family + fallback stack
+              const fallback = `"${cfg.font}", Frutiger, 'Source Sans 3', Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif`;
+              document.body.style.fontFamily = fallback;
+              if(fontSelect) fontSelect.value = cfg.font;
+            }
           }
+          // labels
+          if(cfg.labels){
+            if(lbl_save_label) lbl_save_label.value = cfg.labels.save || '';
+            if(lbl_reset_label) lbl_reset_label.value = cfg.labels.reset || '';
+            if(lbl_close_label) lbl_close_label.value = cfg.labels.close || '';
+            // apply button text
+            if(cfg.labels.save && document.getElementById('saveSettings')) document.getElementById('saveSettings').textContent = cfg.labels.save;
+            if(cfg.labels.reset && document.getElementById('clearSettings')) document.getElementById('clearSettings').textContent = cfg.labels.reset;
+            if(cfg.labels.close && document.getElementById('closeSettings')) document.getElementById('closeSettings').textContent = cfg.labels.close;
+          }
+          // load nav editor values
+          if(cfg.nav){
+            try{
+              if(cfg.nav.home){ if(nav_home_label) nav_home_label.value = cfg.nav.home.label || ''; if(nav_home_sub1_label) nav_home_sub1_label.value = (cfg.nav.home.subs && cfg.nav.home.subs[0] && cfg.nav.home.subs[0].label) || ''; if(nav_home_sub1_url) nav_home_sub1_url.value = (cfg.nav.home.subs && cfg.nav.home.subs[0] && cfg.nav.home.subs[0].url) || '';
+                if(nav_home_sub2_label) nav_home_sub2_label.value = (cfg.nav.home.subs && cfg.nav.home.subs[1] && cfg.nav.home.subs[1].label) || ''; if(nav_home_sub2_url) nav_home_sub2_url.value = (cfg.nav.home.subs && cfg.nav.home.subs[1] && cfg.nav.home.subs[1].url) || ''; }
+              if(cfg.nav.about){ if(nav_about_label) nav_about_label.value = cfg.nav.about.label || ''; if(nav_about_sub1_label) nav_about_sub1_label.value = (cfg.nav.about.subs && cfg.nav.about.subs[0] && cfg.nav.about.subs[0].label) || ''; if(nav_about_sub1_url) nav_about_sub1_url.value = (cfg.nav.about.subs && cfg.nav.about.subs[0] && cfg.nav.about.subs[0].url) || '';
+                if(nav_about_sub2_label) nav_about_sub2_label.value = (cfg.nav.about.subs && cfg.nav.about.subs[1] && cfg.nav.about.subs[1].label) || ''; if(nav_about_sub2_url) nav_about_sub2_url.value = (cfg.nav.about.subs && cfg.nav.about.subs[1] && cfg.nav.about.subs[1].url) || ''; }
+              if(cfg.nav.services){ if(nav_services_label) nav_services_label.value = cfg.nav.services.label || ''; if(nav_services_sub1_label) nav_services_sub1_label.value = (cfg.nav.services.subs && cfg.nav.services.subs[0] && cfg.nav.services.subs[0].label) || ''; if(nav_services_sub1_url) nav_services_sub1_url.value = (cfg.nav.services.subs && cfg.nav.services.subs[0] && cfg.nav.services.subs[0].url) || '';
+                if(nav_services_sub2_label) nav_services_sub2_label.value = (cfg.nav.services.subs && cfg.nav.services.subs[1] && cfg.nav.services.subs[1].label) || ''; if(nav_services_sub2_url) nav_services_sub2_url.value = (cfg.nav.services.subs && cfg.nav.services.subs[1] && cfg.nav.services.subs[1].url) || ''; }
+              if(cfg.nav.portfolio){ if(nav_portfolio_label) nav_portfolio_label.value = cfg.nav.portfolio.label || ''; if(nav_portfolio_sub1_label) nav_portfolio_sub1_label.value = (cfg.nav.portfolio.subs && cfg.nav.portfolio.subs[0] && cfg.nav.portfolio.subs[0].label) || ''; if(nav_portfolio_sub1_url) nav_portfolio_sub1_url.value = (cfg.nav.portfolio.subs && cfg.nav.portfolio.subs[0] && cfg.nav.portfolio.subs[0].url) || '';
+                if(nav_portfolio_sub2_label) nav_portfolio_sub2_label.value = (cfg.nav.portfolio.subs && cfg.nav.portfolio.subs[1] && cfg.nav.portfolio.subs[1].label) || ''; if(nav_portfolio_sub2_url) nav_portfolio_sub2_url.value = (cfg.nav.portfolio.subs && cfg.nav.portfolio.subs[1] && cfg.nav.portfolio.subs[1].url) || ''; }
+              if(cfg.nav.contact){ if(nav_contact_label) nav_contact_label.value = cfg.nav.contact.label || ''; if(nav_contact_sub1_label) nav_contact_sub1_label.value = (cfg.nav.contact.subs && cfg.nav.contact.subs[0] && cfg.nav.contact.subs[0].label) || ''; if(nav_contact_sub1_url) nav_contact_sub1_url.value = (cfg.nav.contact.subs && cfg.nav.contact.subs[0] && cfg.nav.contact.subs[0].url) || '';
+                if(nav_contact_sub2_label) nav_contact_sub2_label.value = (cfg.nav.contact.subs && cfg.nav.contact.subs[1] && cfg.nav.contact.subs[1].label) || ''; if(nav_contact_sub2_url) nav_contact_sub2_url.value = (cfg.nav.contact.subs && cfg.nav.contact.subs[1] && cfg.nav.contact.subs[1].url) || ''; }
+            }catch(e){ console.warn('Failed to apply nav settings to editor', e); }
+          }
+          // language settings removed
         }
       }catch(e){ console.warn('Failed to load settings', e); }
     }
@@ -792,12 +1042,47 @@
       newCfg.accentColor = accentColorVal || null;
       newCfg.buttonStyle = btnStyleVal || null;
       newCfg.font = fontVal || null;
+      // collect nav editor values
+      newCfg.nav = {
+        home: { label: nav_home_label ? nav_home_label.value.trim() : DEFAULT_NAV.home.label, subs: [
+          { label: nav_home_sub1_label ? nav_home_sub1_label.value.trim() : DEFAULT_NAV.home.subs[0].label, url: nav_home_sub1_url ? nav_home_sub1_url.value.trim() : DEFAULT_NAV.home.subs[0].url },
+          { label: nav_home_sub2_label ? nav_home_sub2_label.value.trim() : DEFAULT_NAV.home.subs[1].label, url: nav_home_sub2_url ? nav_home_sub2_url.value.trim() : DEFAULT_NAV.home.subs[1].url }
+        ] },
+        about: { label: nav_about_label ? nav_about_label.value.trim() : DEFAULT_NAV.about.label, subs: [
+          { label: nav_about_sub1_label ? nav_about_sub1_label.value.trim() : DEFAULT_NAV.about.subs[0].label, url: nav_about_sub1_url ? nav_about_sub1_url.value.trim() : DEFAULT_NAV.about.subs[0].url },
+          { label: nav_about_sub2_label ? nav_about_sub2_label.value.trim() : DEFAULT_NAV.about.subs[1].label, url: nav_about_sub2_url ? nav_about_sub2_url.value.trim() : DEFAULT_NAV.about.subs[1].url }
+        ] },
+        services: { label: nav_services_label ? nav_services_label.value.trim() : DEFAULT_NAV.services.label, subs: [
+          { label: nav_services_sub1_label ? nav_services_sub1_label.value.trim() : DEFAULT_NAV.services.subs[0].label, url: nav_services_sub1_url ? nav_services_sub1_url.value.trim() : DEFAULT_NAV.services.subs[0].url },
+          { label: nav_services_sub2_label ? nav_services_sub2_label.value.trim() : DEFAULT_NAV.services.subs[1].label, url: nav_services_sub2_url ? nav_services_sub2_url.value.trim() : DEFAULT_NAV.services.subs[1].url }
+        ] },
+        portfolio: { label: nav_portfolio_label ? nav_portfolio_label.value.trim() : DEFAULT_NAV.portfolio.label, subs: [
+          { label: nav_portfolio_sub1_label ? nav_portfolio_sub1_label.value.trim() : DEFAULT_NAV.portfolio.subs[0].label, url: nav_portfolio_sub1_url ? nav_portfolio_sub1_url.value.trim() : DEFAULT_NAV.portfolio.subs[0].url },
+          { label: nav_portfolio_sub2_label ? nav_portfolio_sub2_label.value.trim() : DEFAULT_NAV.portfolio.subs[1].label, url: nav_portfolio_sub2_url ? nav_portfolio_sub2_url.value.trim() : DEFAULT_NAV.portfolio.subs[1].url }
+        ] },
+        contact: { label: nav_contact_label ? nav_contact_label.value.trim() : DEFAULT_NAV.contact.label, subs: [
+          { label: nav_contact_sub1_label ? nav_contact_sub1_label.value.trim() : DEFAULT_NAV.contact.subs[0].label, url: nav_contact_sub1_url ? nav_contact_sub1_url.value.trim() : DEFAULT_NAV.contact.subs[0].url },
+          { label: nav_contact_sub2_label ? nav_contact_sub2_label.value.trim() : DEFAULT_NAV.contact.subs[1].label, url: nav_contact_sub2_url ? nav_contact_sub2_url.value.trim() : DEFAULT_NAV.contact.subs[1].url }
+        ] }
+      };
+      // language removed
 
       // apply theme immediately
       if(textColorVal) document.documentElement.style.setProperty('--text', textColorVal);
       if(accentColorVal) document.documentElement.style.setProperty('--accent', accentColorVal);
       if(btnStyleVal) document.documentElement.setAttribute('data-button-style', btnStyleVal);
       if(fontVal) document.body.style.fontFamily = fontVal;
+      // language selection removed
+
+      // labels
+      newCfg.labels = {
+        save: lbl_save_label ? (lbl_save_label.value.trim() || null) : null,
+        reset: lbl_reset_label ? (lbl_reset_label.value.trim() || null) : null,
+        close: lbl_close_label ? (lbl_close_label.value.trim() || null) : null,
+      };
+      if(newCfg.labels.save && document.getElementById('saveSettings')) document.getElementById('saveSettings').textContent = newCfg.labels.save;
+      if(newCfg.labels.reset && document.getElementById('clearSettings')) document.getElementById('clearSettings').textContent = newCfg.labels.reset;
+      if(newCfg.labels.close && document.getElementById('closeSettings')) document.getElementById('closeSettings').textContent = newCfg.labels.close;
 
       // apply
       applyBackground(newCfg.background);
@@ -818,7 +1103,11 @@
   else { document.title = INITIAL_TITLE; if(siteTitleInput) siteTitleInput.value = INITIAL_TITLE; }
 
       saveSettingsToStorage(newCfg);
+      // apply nav labels immediately
+      try{ applyLabels(); }catch(e){ console.warn('applyLabels failed', e); }
     });
+
+    // language selector removed
 
     // Live update for opacity slider
     toggleOpacity.addEventListener('input', () => {
@@ -865,8 +1154,28 @@
       if(accentColorInput) accentColorInput.value = '#111827';
       if(buttonStyleSelect) buttonStyleSelect.value = 'default';
       if(fontSelect) fontSelect.value = "Frutiger, 'Source Sans 3', Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial";
+      // Reset nav editor to defaults
+      try{
+        if(nav_home_label) nav_home_label.value = DEFAULT_NAV.home.label; if(nav_home_sub1_label) nav_home_sub1_label.value = DEFAULT_NAV.home.subs[0].label; if(nav_home_sub1_url) nav_home_sub1_url.value = DEFAULT_NAV.home.subs[0].url; if(nav_home_sub2_label) nav_home_sub2_label.value = DEFAULT_NAV.home.subs[1].label; if(nav_home_sub2_url) nav_home_sub2_url.value = DEFAULT_NAV.home.subs[1].url;
+        if(nav_about_label) nav_about_label.value = DEFAULT_NAV.about.label; if(nav_about_sub1_label) nav_about_sub1_label.value = DEFAULT_NAV.about.subs[0].label; if(nav_about_sub1_url) nav_about_sub1_url.value = DEFAULT_NAV.about.subs[0].url; if(nav_about_sub2_label) nav_about_sub2_label.value = DEFAULT_NAV.about.subs[1].label; if(nav_about_sub2_url) nav_about_sub2_url.value = DEFAULT_NAV.about.subs[1].url;
+        if(nav_services_label) nav_services_label.value = DEFAULT_NAV.services.label; if(nav_services_sub1_label) nav_services_sub1_label.value = DEFAULT_NAV.services.subs[0].label; if(nav_services_sub1_url) nav_services_sub1_url.value = DEFAULT_NAV.services.subs[0].url; if(nav_services_sub2_label) nav_services_sub2_label.value = DEFAULT_NAV.services.subs[1].label; if(nav_services_sub2_url) nav_services_sub2_url.value = DEFAULT_NAV.services.subs[1].url;
+        if(nav_portfolio_label) nav_portfolio_label.value = DEFAULT_NAV.portfolio.label; if(nav_portfolio_sub1_label) nav_portfolio_sub1_label.value = DEFAULT_NAV.portfolio.subs[0].label; if(nav_portfolio_sub1_url) nav_portfolio_sub1_url.value = DEFAULT_NAV.portfolio.subs[0].url; if(nav_portfolio_sub2_label) nav_portfolio_sub2_label.value = DEFAULT_NAV.portfolio.subs[1].label; if(nav_portfolio_sub2_url) nav_portfolio_sub2_url.value = DEFAULT_NAV.portfolio.subs[1].url;
+        if(nav_contact_label) nav_contact_label.value = DEFAULT_NAV.contact.label; if(nav_contact_sub1_label) nav_contact_sub1_label.value = DEFAULT_NAV.contact.subs[0].label; if(nav_contact_sub1_url) nav_contact_sub1_url.value = DEFAULT_NAV.contact.subs[0].url; if(nav_contact_sub2_label) nav_contact_sub2_label.value = DEFAULT_NAV.contact.subs[1].label; if(nav_contact_sub2_url) nav_contact_sub2_url.value = DEFAULT_NAV.contact.subs[1].url;
+      }catch(e){ }
+      // Reset label editor values
+      if(lbl_save_label) lbl_save_label.value = 'Save';
+      if(lbl_reset_label) lbl_reset_label.value = 'Reset';
+      if(lbl_close_label) lbl_close_label.value = 'Close';
+      // Reset button text
+      if(document.getElementById('saveSettings')) document.getElementById('saveSettings').textContent = 'Save';
+      if(document.getElementById('clearSettings')) document.getElementById('clearSettings').textContent = 'Reset';
+      if(document.getElementById('closeSettings')) document.getElementById('closeSettings').textContent = 'Close';
       localStorage.removeItem(STORAGE_KEY);
+      // reapply defaults to DOM
+      try{ applyLabels(); }catch(e){}
     });
+
+    // translations removed
 
 
     // Live preview when entering URL
@@ -1018,8 +1327,96 @@
           }
       }catch(e){ console.error('Error loading presets:', e); }
     }
-  // load presets first, then title presets and then stored settings so defaults from manifest are used
-  loadPresets().then(() => { loadTitlePresets(); loadSettings(); }).catch((e) => { console.error('Preset loading failed:', e); loadTitlePresets(); loadSettings(); });
+
+      // --- Font manifest loading: load available font files from /fonts/manifest.json (fallback to assets/fonts/manifest.json)
+      function getFontFormat(ext){
+        const e = ext.toLowerCase().replace(/^[.]/,'');
+        switch(e){
+          case 'woff2': return 'woff2';
+          case 'woff': return 'woff';
+          case 'ttf': return 'truetype';
+          case 'otf': return 'opentype';
+          case 'svg': return 'svg';
+          case 'eot': return 'embedded-opentype';
+          default: return '';
+        }
+      }
+
+      function prettyNameFromFilename(filename){
+        // strip path and extension
+        const base = filename.split('/').pop().replace(/\.[^.]+$/, '');
+        // replace non-alphanumeric with space and trim
+        return base.replace(/[_\-]/g, ' ').replace(/\s+/g,' ').trim();
+      }
+
+      function registerFontFamilyFromFiles(familyName, fileList){
+        // build src string sorted by preferred order (woff2, woff, ttf, otf, svg, eot)
+        const order = ['woff2','woff','ttf','otf','svg','eot'];
+        const sources = [];
+        order.forEach(ext => {
+          fileList.forEach(f => {
+            if(f.toLowerCase().endsWith('.' + ext)){
+              const fmt = getFontFormat(ext);
+              const url = f;
+              sources.push(`url(\"${url}\")${fmt ? ' format(\"' + fmt + '\")' : ''}`);
+            }
+          });
+        });
+        if(!sources.length) return;
+        const css = `@font-face{font-family:"${familyName}";src:${sources.join(',')};font-display:swap;}`;
+        const style = document.createElement('style'); style.textContent = css; document.head.appendChild(style);
+      }
+
+      async function loadFontsManifest(){
+        const pathsToTry = ['/fonts/manifest.json', '/assets/fonts/manifest.json'];
+        let data = null;
+        for(const p of pathsToTry){
+          try{
+            const res = await fetch(p);
+            if(!res.ok) continue;
+            data = await res.json();
+            break;
+          }catch(e){ /* try next */ }
+        }
+        if(!data || !Array.isArray(data)) return;
+        // group by base filename without extension
+        const groups = {};
+        data.forEach(src => {
+          const base = src.split('/').pop().replace(/\.[^.]+$/, '');
+          if(!groups[base]) groups[base] = [];
+          groups[base].push(src);
+        });
+        // empty existing fontSelect options except placeholder
+        const select = document.getElementById('fontSelect');
+        if(!select) return;
+        // keep the first options (the built-in choices), then append
+        const existing = Array.from(select.options).slice(0);
+        // Add each group as a new font family
+        Object.keys(groups).forEach(base => {
+          const files = groups[base];
+          const familyName = prettyNameFromFilename(base);
+          // register @font-face with file list
+          registerFontFamilyFromFiles(familyName, files);
+          // add option to select if not already present
+          const existingOption = Array.from(select.options).find(o => o.value === familyName);
+          if(!existingOption){
+            const opt = document.createElement('option');
+            opt.value = familyName;
+            opt.textContent = familyName;
+            select.appendChild(opt);
+          }
+        });
+      }
+  // load presets and settings
+  // translation code removed
+
+  // initialize presets and settings
+  (async function init(){
+    await loadPresets().then(() => { loadTitlePresets(); }).catch((e) => { console.error('Preset loading failed:', e); loadTitlePresets(); });
+    await loadFontsManifest();
+    await loadSettings();
+    applyLabels();
+  })();
   </script>
 </body>
 </html>
