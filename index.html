@@ -104,16 +104,16 @@
       cursor: pointer;
     }
 
-    /* Sidebar links (centered, airy) */
+    /* Sidebar links (fixed layout) */
     #topSidebar ul{
       list-style: none;
       padding: 0;
-      margin: 8px auto 0 auto;
+      margin: 8px 0 0 0;
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
       gap: var(--gap);
-      justify-content: center;
-      align-items: center;
+      justify-content: flex-start;
+      align-items: stretch;
     }
     #topSidebar ul li a{
       color: var(--accent);
@@ -240,7 +240,7 @@
       opacity: 1;
     }
     /* Top sidebar submenu styles */
-    .nav-item { margin-bottom: 6px; }
+    .nav-item { width: 100%; }
     .nav-toggle {
       display: inline-flex;
       align-items: center;
@@ -261,7 +261,7 @@
       font-size: 1.05rem;
     }
     .nav-toggle:hover{ background: rgba(17,24,39,0.06); transform: translateY(-1px); }
-    .nav-toggle[aria-expanded="true"]{ background: rgba(17,24,39,0.06); }
+    .nav-top[aria-expanded="true"]{ background: transparent; }
     .nav-toggle:focus, .nav-toggle:focus-visible { outline: none !important; box-shadow: none !important; }
 
     /* Smooth, hardware-accelerated submenu animation using scaleY + opacity */
@@ -273,10 +273,13 @@
       display: flex;
       flex-direction: column;
       gap: 6px;
-      margin: 8px 0 12px 0;
+      margin: 8px 0 0 0;
       will-change: transform, opacity;
       pointer-events: none;
     }
+    .nav-top{ display:flex; flex-direction: column; gap:8px; align-items:flex-start; margin-bottom: 8px; width: 100%; }
+    .nav-top .nav-label{ color:var(--accent); text-decoration:none; font-size:1.05rem; padding:8px 12px; border-radius:8px; transition: background .14s, color .14s; display:inline-block; }
+    .nav-top .nav-label:hover{ background: rgba(17,24,39,0.04); color:var(--text); }
     .nav-item.expanded .submenu{
       transform: scaleY(1);
       opacity: 1;
@@ -318,38 +321,52 @@
     <button id="closeBtn">✕</button>
     <ul>
       <li class="nav-item">
-        <button id="navHome" class="nav-toggle" aria-expanded="false" data-i18n="home">ホーム</button>
+        <div id="navHomeToggle" class="nav-top" role="button" tabindex="0" aria-expanded="false">
+          <span id="navHomeLabel" class="nav-label">プロキシ(ブロック解除)</span>
+        </div>
         <div class="submenu" aria-hidden="true">
-          <a id="navHomeOverview" href="#home" data-i18n="homeOverview">概要</a>
-          <a id="navHomeFeatures" href="#home-features" data-i18n="homeFeatures">機能</a>
+          <a id="navHomeOverview" href="https://uhh-like.secret.hosteriafutaleufu.cl/">Glint browser</a>
+          <a id="navHomeFeatures" href="https://supergisfire.com.cdn.cloudflare.net/">Petezah</a>
+          <a id="navHomeFeatures" href="">機能</a>
+          <a id="navHomeFeatures" href="">機能</a>
+          <a id="navHomeFeatures" href="">機能</a>
+          <a id="navHomeFeatures" href="">機能</a>
         </div>
       </li>
       <li class="nav-item">
-        <button id="navAbout" class="nav-toggle" aria-expanded="false" data-i18n="about">について</button>
+        <div id="navAboutToggle" class="nav-top" role="button" tabindex="0" aria-expanded="false">
+          <span id="navAboutLabel" class="nav-label">について</span>
+        </div>
         <div class="submenu" aria-hidden="true">
-          <a id="navAboutTeam" href="#team" data-i18n="aboutTeam">チーム</a>
-          <a id="navAboutHistory" href="#history" data-i18n="aboutHistory">歴史</a>
+          <a id="navAboutTeam" href="#team">チーム</a>
+          <a id="navAboutHistory" href="#history">歴史</a>
         </div>
       </li>
       <li class="nav-item">
-        <button id="navServices" class="nav-toggle" aria-expanded="false" data-i18n="services">サービス</button>
+        <div id="navServicesToggle" class="nav-top" role="button" tabindex="0" aria-expanded="false">
+          <span id="navServicesLabel" class="nav-label">サービス</span>
+        </div>
         <div class="submenu" aria-hidden="true">
-          <a id="navServicesConsulting" href="#consulting" data-i18n="servicesConsulting">コンサルティング</a>
-          <a id="navServicesDevelopment" href="#development" data-i18n="servicesDevelopment">開発</a>
+          <a id="navServicesConsulting" href="#consulting">コンサルティング</a>
+          <a id="navServicesDevelopment" href="#development">開発</a>
         </div>
       </li>
       <li class="nav-item">
-        <button id="navPortfolio" class="nav-toggle" aria-expanded="false" data-i18n="portfolio">ポートフォリオ</button>
+        <div id="navPortfolioToggle" class="nav-top" role="button" tabindex="0" aria-expanded="false">
+          <span id="navPortfolioLabel" class="nav-label">ポートフォリオ</span>
+        </div>
         <div class="submenu" aria-hidden="true">
-          <a id="navPortfolioProjects" href="#projects" data-i18n="portfolioProjects">プロジェクト</a>
-          <a id="navPortfolioCaseStudies" href="#case-studies" data-i18n="portfolioCaseStudies">ケーススタディ</a>
+          <a id="navPortfolioProjects" href="#projects">プロジェクト</a>
+          <a id="navPortfolioCaseStudies" href="#case-studies">ケーススタディ</a>
         </div>
       </li>
       <li class="nav-item">
-        <button id="navContact" class="nav-toggle" aria-expanded="false" data-i18n="contact">お問い合わせ</button>
+        <div id="navContactToggle" class="nav-top" role="button" tabindex="0" aria-expanded="false">
+          <span id="navContactLabel" class="nav-label">お問い合わせ</span>
+        </div>
         <div class="submenu" aria-hidden="true">
-          <a id="navContactGetInTouch" href="#contact-form" data-i18n="contactGetInTouch">ご連絡</a>
-          <a id="navContactLocations" href="#locations" data-i18n="contactLocations">拠点</a>
+          <a id="navContactGetInTouch" href="#contact-form">ご連絡</a>
+          <a id="navContactLocations" href="#locations">拠点</a>
         </div>
       </li>
     </ul>
@@ -357,9 +374,6 @@
 
   <!-- Demo content -->
   <main>
-  <h1 id="mainTitle" data-i18n="homeTitle">ようこそ</h1>
-
-  <section id="home"><h2>ホーム</h2></section>
   </main>
 
   <!-- Settings panel (slide-in) -->
@@ -374,25 +388,25 @@
 
     <hr style="border:none;border-top:1px solid rgba(15,23,42,0.04);margin:6px 0;">
 
-    <div style="font-weight:600;color:var(--muted);font-size:0.95rem;margin-top:8px;" data-i18n="theme">テーマ</div>
+    <div style="font-weight:600;color:var(--muted);font-size:0.95rem;margin-top:8px;">テーマ</div>
       <div class="settings-row">
-        <label for="textColor" data-i18n="textColor">テキスト色</label>
+        <label for="textColor">テキスト色</label>
         <input id="textColor" type="color" value="#0f172a">
       </div>
       <div class="settings-row">
-        <label for="accentColor" data-i18n="accentColor">アクセント色</label>
+        <label for="accentColor">アクセント色</label>
         <input id="accentColor" type="color" value="#111827">
       </div>
       <div class="settings-row">
-        <label for="buttonStyle" data-i18n="buttonStyle">ボタンスタイル</label>
+        <label for="buttonStyle">ボタンスタイル</label>
         <select id="buttonStyle">
           <option value="default">デフォルト</option>
           <option value="flat">フラット</option>
-          <option value="pill">ピル型</option>
+          <option value="pill">丸</option>
         </select>
       </div>
       <div class="settings-row">
-        <label for="fontSelect" data-i18n="font">フォント</label>
+        <label for="fontSelect">フォント</label>
         <select id="fontSelect">
           <option value="Frutiger, 'Source Sans 3', Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial">Frutiger / Source Sans</option>
           <option value="'Source Sans 3', Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial">Source Sans 3</option>
@@ -401,191 +415,97 @@
         </select>
       </div>
       <div class="settings-row">
-      <label for="bgUrl" data-i18n="bgUrl">画像URL</label>
+      <label for="bgUrl">画像URL</label>
       <input id="bgUrl" type="text" placeholder="https://.../image.jpg">
     </div>
 
     <div class="settings-row">
-      <label for="toggleOpacity" data-i18n="menuOpacity">メニュー不透明度</label>
+      <label for="toggleOpacity">メニュー不透明度</label>
       <input id="toggleOpacity" type="range" min="0" max="1" step="0.01" value="0.03">
       <div style="width:48px;text-align:right;color:var(--muted);font-size:0.95rem;" id="toggleOpacityVal">0.03</div>
     </div>
 
     <div class="settings-row">
-      <label for="bgFile" data-i18n="upload">アップロード</label>
+      <label for="bgFile">アップロード</label>
       <input id="bgFile" type="file" accept="image/*">
     </div>
 
     <hr style="border:none;border-top:1px solid rgba(15,23,42,0.04);margin:6px 0;">
 
-    <div style="font-weight:600;color:var(--muted);font-size:0.95rem;" data-i18n="favicon">ファビコン</div>
+    <div style="font-weight:600;color:var(--muted);font-size:0.95rem;">ファビコン</div>
     <div class="settings-row">
-      <label for="faviconUrl" data-i18n="faviconUrlLabel">ファビコンURL</label>
+      <label for="faviconUrl">ファビコンURL</label>
       <input id="faviconUrl" type="text" placeholder="https://.../favicon.ico">
       <div class="icon-preview" id="faviconPreview"><img alt="favicon preview" id="faviconPreviewImg"></div>
     </div>
     <div class="settings-row">
-      <label for="faviconFile" data-i18n="bgFileLabel">アップロード</label>
+      <label for="faviconFile">アップロード</label>
       <input id="faviconFile" type="file" accept="image/*">
     </div>
 
     <div class="settings-row">
-      <label for="siteTitle" data-i18n="siteTitle">サイトタイトル</label>
+      <label for="siteTitle">サイトタイトル</label>
       <input id="siteTitle" type="text" placeholder="サイトタイトル">
     </div>
 
-    <div style="font-weight:600;color:var(--muted);font-size:0.95rem;margin-top:8px;" data-i18n="titlePresets">タイトルプリセット</div>
+    <div style="font-weight:600;color:var(--muted);font-size:0.95rem;margin-top:8px;">タイトルプリセット</div>
     <div id="titlePresets" style="display:flex;gap:8px;flex-wrap:wrap;padding:6px;border-radius:8px;border:1px solid rgba(15,23,42,0.03);"></div>
 
     <hr style="border:none;border-top:1px solid rgba(15,23,42,0.04);margin:6px 0;">
 
-    <div style="font-weight:600;color:var(--muted);font-size:0.95rem;" data-i18n="icons">アイコン</div>
+    <div style="font-weight:600;color:var(--muted);font-size:0.95rem;">アイコン</div>
 
     <div class="settings-row">
-      <label for="toggleIconUrl" data-i18n="menuIcon">メニューアイコンURL</label>
+      <label for="toggleIconUrl">メニューアイコンURL</label>
       <input id="toggleIconUrl" type="text" placeholder="https://.../icon.png">
       <div class="icon-preview" id="toggleIconPreview"><img alt="menu preview" id="toggleIconPreviewImg"></div>
     </div>
 
     <div class="settings-row">
-      <label for="toggleIconFile" data-i18n="toggleIconFileLabel">アップロード</label>
+      <label for="toggleIconFile">アップロード</label>
       <input id="toggleIconFile" type="file" accept="image/*">
     </div>
 
     <div class="settings-row">
-      <label for="settingsIconUrl" data-i18n="settingsIcon">設定アイコンURL</label>
+      <label for="settingsIconUrl">設定アイコンURL</label>
       <input id="settingsIconUrl" type="text" placeholder="https://.../icon.png">
       <div class="icon-preview" id="settingsIconPreview"><img alt="settings preview" id="settingsIconPreviewImg"></div>
     </div>
 
     <div class="settings-row">
-      <label for="settingsIconFile" data-i18n="settingsIconFileLabel">アップロード</label>
+      <label for="settingsIconFile">アップロード</label>
       <input id="settingsIconFile" type="file" accept="image/*">
     </div>
 
     <div class="settings-row">
-      <label data-i18n="preview">プレビュー</label>
+      <label>プレビュー</label>
       <div id="bgPreview" class="bg-preview" aria-hidden="true"></div>
     </div>
 
-    <div style="font-weight:600;color:var(--muted);font-size:0.95rem;" data-i18n="presetIcons">プリセットアイコン</div>
+    <div style="font-weight:600;color:var(--muted);font-size:0.95rem;">プリセットアイコン</div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;">
       <div style="flex:1;min-width:220px;">
-        <div style="font-size:0.95rem;color:var(--muted);margin-bottom:6px;" data-i18n="menuPresets">メニュープリセット</div>
+        <div style="font-size:0.95rem;color:var(--muted);margin-bottom:6px;">メニュープリセット</div>
         <div id="menuPresets" style="display:flex;gap:8px;flex-wrap:wrap;
           background:transparent;padding:6px;border-radius:8px;border:1px solid rgba(15,23,42,0.03);
         "></div>
       </div>
       <div style="flex:1;min-width:220px;">
-        <div style="font-size:0.95rem;color:var(--muted);margin-bottom:6px;" data-i18n="settingsPresets">設定プリセット</div>
+        <div style="font-size:0.95rem;color:var(--muted);margin-bottom:6px;">設定プリセット</div>
         <div id="settingsPresets" style="display:flex;gap:8px;flex-wrap:wrap;
           background:transparent;padding:6px;border-radius:8px;border:1px solid rgba(15,23,42,0.03);
         "></div>
       </div>
     </div>
 
-      <div style="font-weight:600;color:var(--muted);font-size:0.95rem;margin-top:8px;" data-i18n="faviconPresets">ファビコンプリセット</div>
+      <div style="font-weight:600;color:var(--muted);font-size:0.95rem;margin-top:8px;">ファビコンプリセット</div>
       <div id="faviconPresets" style="display:flex;gap:8px;flex-wrap:wrap;padding:6px;border-radius:8px;border:1px solid rgba(15,23,42,0.03);"></div>
 
-      <div style="font-weight:600;color:var(--muted);font-size:0.95rem;margin-top:8px;" data-i18n="backgroundPresets">背景プリセット</div>
+      <div style="font-weight:600;color:var(--muted);font-size:0.95rem;margin-top:8px;">背景プリセット</div>
       <div id="bgPresets" style="display:flex;gap:8px;flex-wrap:wrap;padding:6px;border-radius:8px;border:1px solid rgba(15,23,42,0.03);"></div>
       
-    <hr style="border:none;border-top:1px solid rgba(15,23,42,0.04);margin:6px 0;">
-    <div style="font-weight:600;color:var(--muted);font-size:0.95rem;margin-top:8px;">ナビゲーション (Navigation)</div>
-    <div style="font-size:0.95rem;color:var(--muted);margin:6px 0;">トップバーのラベルとリンクをここで編集できます。</div>
-    <div id="navEditor" style="display:flex;flex-direction:column;gap:8px;padding:6px;border-radius:8px;border:1px solid rgba(15,23,42,0.03);">
-      <!-- Home -->
-      <div class="settings-row">
-        <label for="nav_home_label">Home label</label>
-        <input id="nav_home_label" type="text" placeholder="Home">
-      </div>
-      <div class="settings-row">
-        <label for="nav_home_sub1_label">Home sub1</label>
-        <input id="nav_home_sub1_label" type="text" placeholder="Overview">
-        <input id="nav_home_sub1_url" type="text" placeholder="#home">
-      </div>
-      <div class="settings-row">
-        <label for="nav_home_sub2_label">Home sub2</label>
-        <input id="nav_home_sub2_label" type="text" placeholder="Features">
-        <input id="nav_home_sub2_url" type="text" placeholder="#home-features">
-      </div>
-      <!-- About -->
-      <div class="settings-row">
-        <label for="nav_about_label">About label</label>
-        <input id="nav_about_label" type="text" placeholder="About">
-      </div>
-      <div class="settings-row">
-        <label for="nav_about_sub1_label">About sub1</label>
-        <input id="nav_about_sub1_label" type="text" placeholder="Team">
-        <input id="nav_about_sub1_url" type="text" placeholder="#team">
-      </div>
-      <div class="settings-row">
-        <label for="nav_about_sub2_label">About sub2</label>
-        <input id="nav_about_sub2_label" type="text" placeholder="History">
-        <input id="nav_about_sub2_url" type="text" placeholder="#history">
-      </div>
-      <!-- Services -->
-      <div class="settings-row">
-        <label for="nav_services_label">Services label</label>
-        <input id="nav_services_label" type="text" placeholder="Services">
-      </div>
-      <div class="settings-row">
-        <label for="nav_services_sub1_label">Services sub1</label>
-        <input id="nav_services_sub1_label" type="text" placeholder="Consulting">
-        <input id="nav_services_sub1_url" type="text" placeholder="#consulting">
-      </div>
-      <div class="settings-row">
-        <label for="nav_services_sub2_label">Services sub2</label>
-        <input id="nav_services_sub2_label" type="text" placeholder="Development">
-        <input id="nav_services_sub2_url" type="text" placeholder="#development">
-      </div>
-      <!-- Portfolio -->
-      <div class="settings-row">
-        <label for="nav_portfolio_label">Portfolio label</label>
-        <input id="nav_portfolio_label" type="text" placeholder="Portfolio">
-      </div>
-      <div class="settings-row">
-        <label for="nav_portfolio_sub1_label">Portfolio sub1</label>
-        <input id="nav_portfolio_sub1_label" type="text" placeholder="Projects">
-        <input id="nav_portfolio_sub1_url" type="text" placeholder="#projects">
-      </div>
-      <div class="settings-row">
-        <label for="nav_portfolio_sub2_label">Portfolio sub2</label>
-        <input id="nav_portfolio_sub2_label" type="text" placeholder="Case studies">
-        <input id="nav_portfolio_sub2_url" type="text" placeholder="#case-studies">
-      </div>
-      <!-- Contact -->
-      <div class="settings-row">
-        <label for="nav_contact_label">Contact label</label>
-        <input id="nav_contact_label" type="text" placeholder="Contact">
-      </div>
-      <div class="settings-row">
-        <label for="nav_contact_sub1_label">Contact sub1</label>
-        <input id="nav_contact_sub1_label" type="text" placeholder="Get in touch">
-        <input id="nav_contact_sub1_url" type="text" placeholder="#contact-form">
-      </div>
-      <div class="settings-row">
-        <label for="nav_contact_sub2_label">Contact sub2</label>
-        <input id="nav_contact_sub2_label" type="text" placeholder="Locations">
-        <input id="nav_contact_sub2_url" type="text" placeholder="#locations">
-      </div>
-    </div>
-    <hr style="border:none;border-top:1px solid rgba(15,23,42,0.04);margin:6px 0;">
-    <div style="font-weight:600;color:var(--muted);font-size:0.95rem;margin-top:8px;">Label Editor</div>
-    <div id="labelEditor" style="display:flex;flex-direction:column;gap:8px;padding:6px;border-radius:8px;border:1px solid rgba(15,23,42,0.03);">
-      <div class="settings-row">
-        <label for="lbl_save_label">Save button</label>
-        <input id="lbl_save_label" type="text" placeholder="Save">
-      </div>
-      <div class="settings-row">
-        <label for="lbl_reset_label">Reset button</label>
-        <input id="lbl_reset_label" type="text" placeholder="Reset">
-      </div>
-      <div class="settings-row">
-        <label for="lbl_close_label">Close button</label>
-        <input id="lbl_close_label" type="text" placeholder="Close">
-      </div>
-    </div>
+    </div> <!-- .settings-inner -->
+
     </div> <!-- .settings-inner -->
 
     <div class="settings-actions">
@@ -596,75 +516,6 @@
   </aside>
 
   <script>
-    // translation system removed. default static labels are used and navigation labels are editable via settings.
-    // Apply UI labels and nav links from stored settings or defaults
-    const DEFAULT_NAV = {
-      home: { label: 'Home', url: '#home', subs: [{label:'Overview', url:'#home'}, {label:'Features', url:'#home-features'}] },
-      about: { label: 'About', url: '#about', subs: [{label:'Team', url:'#team'}, {label:'History', url:'#history'}] },
-      services: { label: 'Services', url: '#services', subs: [{label:'Consulting', url:'#consulting'}, {label:'Development', url:'#development'}] },
-      portfolio: { label: 'Portfolio', url: '#portfolio', subs: [{label:'Projects', url:'#projects'}, {label:'Case studies', url:'#case-studies'}] },
-      contact: { label: 'Contact', url: '#contact-form', subs: [{label:'Get in touch', url:'#contact-form'}, {label:'Locations', url:'#locations'}] },
-    };
-
-    function applyLabels(){
-      // load settings nav from localStorage (if any)
-      let cfg = {};
-      try{ cfg = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}') || {}; }catch(e){ cfg = {}; }
-      const navCfg = (cfg.nav) ? cfg.nav : DEFAULT_NAV;
-      // apply main title
-      const h1 = document.querySelector('main h1');
-      if(h1 && cfg.title) h1.textContent = cfg.title; else if(h1) h1.textContent = DEFAULT_NAV.home.label;
-      // apply nav labels and hrefs
-      const map = ['home','about','services','portfolio','contact'];
-      map.forEach(key => {
-        const item = navCfg[key] || DEFAULT_NAV[key];
-        const btn = document.getElementById('nav' + key[0].toUpperCase() + key.slice(1));
-        if(btn && item) btn.textContent = item.label || DEFAULT_NAV[key].label;
-        const submenu = document.getElementById('nav' + key[0].toUpperCase() + key.slice(1)); // not used for hrefs
-        // apply links for subitems
-        try{
-          const container = document.querySelector('#' + 'nav' + key[0].toUpperCase() + key.slice(1) + ' ~ .submenu');
-        }catch(e){}
-      });
-      // quick pass for each submenu link by known ids
-      ['Home','About','Services','Portfolio','Contact'].forEach((name, idx) => {
-        const key = map[idx];
-        const item = navCfg[key] || DEFAULT_NAV[key];
-        // top-level link is button (no href), but sublinks have specific ids
-        if(item && item.subs){
-          item.subs.forEach((s, i) => {
-            const subEl = document.getElementById(`nav${key[0].toUpperCase() + key.slice(1)}${i===0? (key==='home'?'Overview': (key==='about'?'Team':'Consulting')) : (i===1? (key==='home'?'Features': (key==='about'?'History':'Development')) : '')}`);
-            // fallback to known ids we created earlier
-          });
-        }
-      });
-      // apply hrefs for submenu items using explicit IDs
-      // Home
-      const navHomeOverview = document.getElementById('navHomeOverview'); if(navHomeOverview){ navHomeOverview.href = (navCfg.home && navCfg.home.subs && navCfg.home.subs[0] && navCfg.home.subs[0].url) || '#home'; }
-      const navHomeFeatures = document.getElementById('navHomeFeatures'); if(navHomeFeatures){ navHomeFeatures.href = (navCfg.home && navCfg.home.subs && navCfg.home.subs[1] && navCfg.home.subs[1].url) || '#home-features'; }
-      // About
-      const navAboutTeam = document.getElementById('navAboutTeam'); if(navAboutTeam){ navAboutTeam.href = (navCfg.about && navCfg.about.subs && navCfg.about.subs[0] && navCfg.about.subs[0].url) || '#team'; }
-      const navAboutHistory = document.getElementById('navAboutHistory'); if(navAboutHistory){ navAboutHistory.href = (navCfg.about && navCfg.about.subs && navCfg.about.subs[1] && navCfg.about.subs[1].url) || '#history'; }
-      // Services
-      const navServicesConsulting = document.getElementById('navServicesConsulting'); if(navServicesConsulting){ navServicesConsulting.href = (navCfg.services && navCfg.services.subs && navCfg.services.subs[0] && navCfg.services.subs[0].url) || '#consulting'; }
-      const navServicesDevelopment = document.getElementById('navServicesDevelopment'); if(navServicesDevelopment){ navServicesDevelopment.href = (navCfg.services && navCfg.services.subs && navCfg.services.subs[1] && navCfg.services.subs[1].url) || '#development'; }
-      // Portfolio
-      const navPortfolioProjects = document.getElementById('navPortfolioProjects'); if(navPortfolioProjects){ navPortfolioProjects.href = (navCfg.portfolio && navCfg.portfolio.subs && navCfg.portfolio.subs[0] && navCfg.portfolio.subs[0].url) || '#projects'; }
-      const navPortfolioCaseStudies = document.getElementById('navPortfolioCaseStudies'); if(navPortfolioCaseStudies){ navPortfolioCaseStudies.href = (navCfg.portfolio && navCfg.portfolio.subs && navCfg.portfolio.subs[1] && navCfg.portfolio.subs[1].url) || '#case-studies'; }
-      // Contact
-      const navContactGetInTouch = document.getElementById('navContactGetInTouch'); if(navContactGetInTouch){ navContactGetInTouch.href = (navCfg.contact && navCfg.contact.subs && navCfg.contact.subs[0] && navCfg.contact.subs[0].url) || '#contact-form'; }
-      const navContactLocations = document.getElementById('navContactLocations'); if(navContactLocations){ navContactLocations.href = (navCfg.contact && navCfg.contact.subs && navCfg.contact.subs[1] && navCfg.contact.subs[1].url) || '#locations'; }
-      // set aria-labels to sensible defaults
-      const tBtn = document.getElementById('toggleBtn'); if(tBtn) tBtn.setAttribute('aria-label', 'Open menu');
-      const sBtn = document.getElementById('settingsBtn'); if(sBtn) sBtn.setAttribute('aria-label', 'Open settings');
-      const cBtn = document.getElementById('closeBtn'); if(cBtn) cBtn.setAttribute('aria-label', 'Close menu');
-      const scTop = document.getElementById('settingsCloseTop'); if(scTop) scTop.setAttribute('aria-label', 'Close settings');
-      // alt texts
-      if(toggleIconEl) toggleIconEl.alt = 'menu icon';
-      if(settingsIconEl) settingsIconEl.alt = 'settings icon';
-      if(faviconPreviewImg) faviconPreviewImg.alt = 'favicon preview';
-    }
-      // Legacy text update logic removed, applyLabels() manages nav & text
     const toggleBtn = document.getElementById('toggleBtn');
     const closeBtn   = document.getElementById('closeBtn');
     const sidebar    = document.getElementById('topSidebar');
@@ -696,16 +547,40 @@
 
     // Expandable submenu behavior for top sidebar
     (function setupSubmenus(){
-      const toggles = sidebar.querySelectorAll('.nav-toggle');
-      toggles.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          const li = btn.closest('.nav-item');
+      const tops = sidebar.querySelectorAll('.nav-top');
+      tops.forEach(top => {
+        const toggleFn = (e) => {
+          // if clicking on inner link, allow link navigation
+          if(e.target && (e.target.tagName === 'A' || e.target.closest && e.target.closest('a'))) return;
+          const li = top.closest('.nav-item');
           if(!li) return;
-          const expanded = li.classList.toggle('expanded');
-          btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
-          const submenu = li.querySelector('.submenu');
-          if(submenu) submenu.setAttribute('aria-hidden', expanded ? 'false' : 'true');
-        });
+          // Check if already expanded
+          const isCurrentlyExpanded = li.classList.contains('expanded');
+          if(isCurrentlyExpanded){
+            // If clicking expanded item, just collapse it
+            li.classList.remove('expanded');
+            top.setAttribute('aria-expanded', 'false');
+            const submenu = li.querySelector('.submenu');
+            if(submenu) submenu.setAttribute('aria-hidden', 'true');
+          } else {
+            // Close all other expanded items first
+            const expandedItems = sidebar.querySelectorAll('.nav-item.expanded');
+            expandedItems.forEach(item => {
+              item.classList.remove('expanded');
+              const itemTop = item.querySelector('.nav-top');
+              if(itemTop) itemTop.setAttribute('aria-expanded', 'false');
+              const itemSubmenu = item.querySelector('.submenu');
+              if(itemSubmenu) itemSubmenu.setAttribute('aria-hidden', 'true');
+            });
+            // Expand the new item
+            li.classList.add('expanded');
+            top.setAttribute('aria-expanded', 'true');
+            const submenu = li.querySelector('.submenu');
+            if(submenu) submenu.setAttribute('aria-hidden', 'false');
+          }
+        };
+        top.addEventListener('click', toggleFn);
+        top.addEventListener('keydown', (e) => { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleFn(e); } });
       });
     })();
 
@@ -750,40 +625,6 @@
     const settingsIconUrl = document.getElementById('settingsIconUrl');
     const settingsIconFile = document.getElementById('settingsIconFile');
     const settingsIconPreviewImg = document.getElementById('settingsIconPreviewImg');
-    // Label editor inputs
-    const lbl_save_label = document.getElementById('lbl_save_label');
-    const lbl_reset_label = document.getElementById('lbl_reset_label');
-    const lbl_close_label = document.getElementById('lbl_close_label');
-    // Nav editor inputs
-    const nav_home_label = document.getElementById('nav_home_label');
-    const nav_home_sub1_label = document.getElementById('nav_home_sub1_label');
-    const nav_home_sub1_url = document.getElementById('nav_home_sub1_url');
-    const nav_home_sub2_label = document.getElementById('nav_home_sub2_label');
-    const nav_home_sub2_url = document.getElementById('nav_home_sub2_url');
-
-    const nav_about_label = document.getElementById('nav_about_label');
-    const nav_about_sub1_label = document.getElementById('nav_about_sub1_label');
-    const nav_about_sub1_url = document.getElementById('nav_about_sub1_url');
-    const nav_about_sub2_label = document.getElementById('nav_about_sub2_label');
-    const nav_about_sub2_url = document.getElementById('nav_about_sub2_url');
-
-    const nav_services_label = document.getElementById('nav_services_label');
-    const nav_services_sub1_label = document.getElementById('nav_services_sub1_label');
-    const nav_services_sub1_url = document.getElementById('nav_services_sub1_url');
-    const nav_services_sub2_label = document.getElementById('nav_services_sub2_label');
-    const nav_services_sub2_url = document.getElementById('nav_services_sub2_url');
-
-    const nav_portfolio_label = document.getElementById('nav_portfolio_label');
-    const nav_portfolio_sub1_label = document.getElementById('nav_portfolio_sub1_label');
-    const nav_portfolio_sub1_url = document.getElementById('nav_portfolio_sub1_url');
-    const nav_portfolio_sub2_label = document.getElementById('nav_portfolio_sub2_label');
-    const nav_portfolio_sub2_url = document.getElementById('nav_portfolio_sub2_url');
-
-    const nav_contact_label = document.getElementById('nav_contact_label');
-    const nav_contact_sub1_label = document.getElementById('nav_contact_sub1_label');
-    const nav_contact_sub1_url = document.getElementById('nav_contact_sub1_url');
-    const nav_contact_sub2_label = document.getElementById('nav_contact_sub2_label');
-    const nav_contact_sub2_url = document.getElementById('nav_contact_sub2_url');
 
   // set immediate defaults so buttons show icons before settings load
   toggleIconEl.src = DEFAULT_TOGGLE_ICON;
@@ -909,32 +750,6 @@
               if(fontSelect) fontSelect.value = cfg.font;
             }
           }
-          // labels
-          if(cfg.labels){
-            if(lbl_save_label) lbl_save_label.value = cfg.labels.save || '';
-            if(lbl_reset_label) lbl_reset_label.value = cfg.labels.reset || '';
-            if(lbl_close_label) lbl_close_label.value = cfg.labels.close || '';
-            // apply button text
-            if(cfg.labels.save && document.getElementById('saveSettings')) document.getElementById('saveSettings').textContent = cfg.labels.save;
-            if(cfg.labels.reset && document.getElementById('clearSettings')) document.getElementById('clearSettings').textContent = cfg.labels.reset;
-            if(cfg.labels.close && document.getElementById('closeSettings')) document.getElementById('closeSettings').textContent = cfg.labels.close;
-          }
-          // load nav editor values
-          if(cfg.nav){
-            try{
-              if(cfg.nav.home){ if(nav_home_label) nav_home_label.value = cfg.nav.home.label || ''; if(nav_home_sub1_label) nav_home_sub1_label.value = (cfg.nav.home.subs && cfg.nav.home.subs[0] && cfg.nav.home.subs[0].label) || ''; if(nav_home_sub1_url) nav_home_sub1_url.value = (cfg.nav.home.subs && cfg.nav.home.subs[0] && cfg.nav.home.subs[0].url) || '';
-                if(nav_home_sub2_label) nav_home_sub2_label.value = (cfg.nav.home.subs && cfg.nav.home.subs[1] && cfg.nav.home.subs[1].label) || ''; if(nav_home_sub2_url) nav_home_sub2_url.value = (cfg.nav.home.subs && cfg.nav.home.subs[1] && cfg.nav.home.subs[1].url) || ''; }
-              if(cfg.nav.about){ if(nav_about_label) nav_about_label.value = cfg.nav.about.label || ''; if(nav_about_sub1_label) nav_about_sub1_label.value = (cfg.nav.about.subs && cfg.nav.about.subs[0] && cfg.nav.about.subs[0].label) || ''; if(nav_about_sub1_url) nav_about_sub1_url.value = (cfg.nav.about.subs && cfg.nav.about.subs[0] && cfg.nav.about.subs[0].url) || '';
-                if(nav_about_sub2_label) nav_about_sub2_label.value = (cfg.nav.about.subs && cfg.nav.about.subs[1] && cfg.nav.about.subs[1].label) || ''; if(nav_about_sub2_url) nav_about_sub2_url.value = (cfg.nav.about.subs && cfg.nav.about.subs[1] && cfg.nav.about.subs[1].url) || ''; }
-              if(cfg.nav.services){ if(nav_services_label) nav_services_label.value = cfg.nav.services.label || ''; if(nav_services_sub1_label) nav_services_sub1_label.value = (cfg.nav.services.subs && cfg.nav.services.subs[0] && cfg.nav.services.subs[0].label) || ''; if(nav_services_sub1_url) nav_services_sub1_url.value = (cfg.nav.services.subs && cfg.nav.services.subs[0] && cfg.nav.services.subs[0].url) || '';
-                if(nav_services_sub2_label) nav_services_sub2_label.value = (cfg.nav.services.subs && cfg.nav.services.subs[1] && cfg.nav.services.subs[1].label) || ''; if(nav_services_sub2_url) nav_services_sub2_url.value = (cfg.nav.services.subs && cfg.nav.services.subs[1] && cfg.nav.services.subs[1].url) || ''; }
-              if(cfg.nav.portfolio){ if(nav_portfolio_label) nav_portfolio_label.value = cfg.nav.portfolio.label || ''; if(nav_portfolio_sub1_label) nav_portfolio_sub1_label.value = (cfg.nav.portfolio.subs && cfg.nav.portfolio.subs[0] && cfg.nav.portfolio.subs[0].label) || ''; if(nav_portfolio_sub1_url) nav_portfolio_sub1_url.value = (cfg.nav.portfolio.subs && cfg.nav.portfolio.subs[0] && cfg.nav.portfolio.subs[0].url) || '';
-                if(nav_portfolio_sub2_label) nav_portfolio_sub2_label.value = (cfg.nav.portfolio.subs && cfg.nav.portfolio.subs[1] && cfg.nav.portfolio.subs[1].label) || ''; if(nav_portfolio_sub2_url) nav_portfolio_sub2_url.value = (cfg.nav.portfolio.subs && cfg.nav.portfolio.subs[1] && cfg.nav.portfolio.subs[1].url) || ''; }
-              if(cfg.nav.contact){ if(nav_contact_label) nav_contact_label.value = cfg.nav.contact.label || ''; if(nav_contact_sub1_label) nav_contact_sub1_label.value = (cfg.nav.contact.subs && cfg.nav.contact.subs[0] && cfg.nav.contact.subs[0].label) || ''; if(nav_contact_sub1_url) nav_contact_sub1_url.value = (cfg.nav.contact.subs && cfg.nav.contact.subs[0] && cfg.nav.contact.subs[0].url) || '';
-                if(nav_contact_sub2_label) nav_contact_sub2_label.value = (cfg.nav.contact.subs && cfg.nav.contact.subs[1] && cfg.nav.contact.subs[1].label) || ''; if(nav_contact_sub2_url) nav_contact_sub2_url.value = (cfg.nav.contact.subs && cfg.nav.contact.subs[1] && cfg.nav.contact.subs[1].url) || ''; }
-            }catch(e){ console.warn('Failed to apply nav settings to editor', e); }
-          }
-          // language settings removed
         }
       }catch(e){ console.warn('Failed to load settings', e); }
     }
@@ -1042,30 +857,6 @@
       newCfg.accentColor = accentColorVal || null;
       newCfg.buttonStyle = btnStyleVal || null;
       newCfg.font = fontVal || null;
-      // collect nav editor values
-      newCfg.nav = {
-        home: { label: nav_home_label ? nav_home_label.value.trim() : DEFAULT_NAV.home.label, subs: [
-          { label: nav_home_sub1_label ? nav_home_sub1_label.value.trim() : DEFAULT_NAV.home.subs[0].label, url: nav_home_sub1_url ? nav_home_sub1_url.value.trim() : DEFAULT_NAV.home.subs[0].url },
-          { label: nav_home_sub2_label ? nav_home_sub2_label.value.trim() : DEFAULT_NAV.home.subs[1].label, url: nav_home_sub2_url ? nav_home_sub2_url.value.trim() : DEFAULT_NAV.home.subs[1].url }
-        ] },
-        about: { label: nav_about_label ? nav_about_label.value.trim() : DEFAULT_NAV.about.label, subs: [
-          { label: nav_about_sub1_label ? nav_about_sub1_label.value.trim() : DEFAULT_NAV.about.subs[0].label, url: nav_about_sub1_url ? nav_about_sub1_url.value.trim() : DEFAULT_NAV.about.subs[0].url },
-          { label: nav_about_sub2_label ? nav_about_sub2_label.value.trim() : DEFAULT_NAV.about.subs[1].label, url: nav_about_sub2_url ? nav_about_sub2_url.value.trim() : DEFAULT_NAV.about.subs[1].url }
-        ] },
-        services: { label: nav_services_label ? nav_services_label.value.trim() : DEFAULT_NAV.services.label, subs: [
-          { label: nav_services_sub1_label ? nav_services_sub1_label.value.trim() : DEFAULT_NAV.services.subs[0].label, url: nav_services_sub1_url ? nav_services_sub1_url.value.trim() : DEFAULT_NAV.services.subs[0].url },
-          { label: nav_services_sub2_label ? nav_services_sub2_label.value.trim() : DEFAULT_NAV.services.subs[1].label, url: nav_services_sub2_url ? nav_services_sub2_url.value.trim() : DEFAULT_NAV.services.subs[1].url }
-        ] },
-        portfolio: { label: nav_portfolio_label ? nav_portfolio_label.value.trim() : DEFAULT_NAV.portfolio.label, subs: [
-          { label: nav_portfolio_sub1_label ? nav_portfolio_sub1_label.value.trim() : DEFAULT_NAV.portfolio.subs[0].label, url: nav_portfolio_sub1_url ? nav_portfolio_sub1_url.value.trim() : DEFAULT_NAV.portfolio.subs[0].url },
-          { label: nav_portfolio_sub2_label ? nav_portfolio_sub2_label.value.trim() : DEFAULT_NAV.portfolio.subs[1].label, url: nav_portfolio_sub2_url ? nav_portfolio_sub2_url.value.trim() : DEFAULT_NAV.portfolio.subs[1].url }
-        ] },
-        contact: { label: nav_contact_label ? nav_contact_label.value.trim() : DEFAULT_NAV.contact.label, subs: [
-          { label: nav_contact_sub1_label ? nav_contact_sub1_label.value.trim() : DEFAULT_NAV.contact.subs[0].label, url: nav_contact_sub1_url ? nav_contact_sub1_url.value.trim() : DEFAULT_NAV.contact.subs[0].url },
-          { label: nav_contact_sub2_label ? nav_contact_sub2_label.value.trim() : DEFAULT_NAV.contact.subs[1].label, url: nav_contact_sub2_url ? nav_contact_sub2_url.value.trim() : DEFAULT_NAV.contact.subs[1].url }
-        ] }
-      };
-      // language removed
 
       // apply theme immediately
       if(textColorVal) document.documentElement.style.setProperty('--text', textColorVal);
@@ -1074,15 +865,7 @@
       if(fontVal) document.body.style.fontFamily = fontVal;
       // language selection removed
 
-      // labels
-      newCfg.labels = {
-        save: lbl_save_label ? (lbl_save_label.value.trim() || null) : null,
-        reset: lbl_reset_label ? (lbl_reset_label.value.trim() || null) : null,
-        close: lbl_close_label ? (lbl_close_label.value.trim() || null) : null,
-      };
-      if(newCfg.labels.save && document.getElementById('saveSettings')) document.getElementById('saveSettings').textContent = newCfg.labels.save;
-      if(newCfg.labels.reset && document.getElementById('clearSettings')) document.getElementById('clearSettings').textContent = newCfg.labels.reset;
-      if(newCfg.labels.close && document.getElementById('closeSettings')) document.getElementById('closeSettings').textContent = newCfg.labels.close;
+
 
       // apply
       applyBackground(newCfg.background);
@@ -1103,8 +886,6 @@
   else { document.title = INITIAL_TITLE; if(siteTitleInput) siteTitleInput.value = INITIAL_TITLE; }
 
       saveSettingsToStorage(newCfg);
-      // apply nav labels immediately
-      try{ applyLabels(); }catch(e){ console.warn('applyLabels failed', e); }
     });
 
     // language selector removed
@@ -1154,25 +935,8 @@
       if(accentColorInput) accentColorInput.value = '#111827';
       if(buttonStyleSelect) buttonStyleSelect.value = 'default';
       if(fontSelect) fontSelect.value = "Frutiger, 'Source Sans 3', Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial";
-      // Reset nav editor to defaults
-      try{
-        if(nav_home_label) nav_home_label.value = DEFAULT_NAV.home.label; if(nav_home_sub1_label) nav_home_sub1_label.value = DEFAULT_NAV.home.subs[0].label; if(nav_home_sub1_url) nav_home_sub1_url.value = DEFAULT_NAV.home.subs[0].url; if(nav_home_sub2_label) nav_home_sub2_label.value = DEFAULT_NAV.home.subs[1].label; if(nav_home_sub2_url) nav_home_sub2_url.value = DEFAULT_NAV.home.subs[1].url;
-        if(nav_about_label) nav_about_label.value = DEFAULT_NAV.about.label; if(nav_about_sub1_label) nav_about_sub1_label.value = DEFAULT_NAV.about.subs[0].label; if(nav_about_sub1_url) nav_about_sub1_url.value = DEFAULT_NAV.about.subs[0].url; if(nav_about_sub2_label) nav_about_sub2_label.value = DEFAULT_NAV.about.subs[1].label; if(nav_about_sub2_url) nav_about_sub2_url.value = DEFAULT_NAV.about.subs[1].url;
-        if(nav_services_label) nav_services_label.value = DEFAULT_NAV.services.label; if(nav_services_sub1_label) nav_services_sub1_label.value = DEFAULT_NAV.services.subs[0].label; if(nav_services_sub1_url) nav_services_sub1_url.value = DEFAULT_NAV.services.subs[0].url; if(nav_services_sub2_label) nav_services_sub2_label.value = DEFAULT_NAV.services.subs[1].label; if(nav_services_sub2_url) nav_services_sub2_url.value = DEFAULT_NAV.services.subs[1].url;
-        if(nav_portfolio_label) nav_portfolio_label.value = DEFAULT_NAV.portfolio.label; if(nav_portfolio_sub1_label) nav_portfolio_sub1_label.value = DEFAULT_NAV.portfolio.subs[0].label; if(nav_portfolio_sub1_url) nav_portfolio_sub1_url.value = DEFAULT_NAV.portfolio.subs[0].url; if(nav_portfolio_sub2_label) nav_portfolio_sub2_label.value = DEFAULT_NAV.portfolio.subs[1].label; if(nav_portfolio_sub2_url) nav_portfolio_sub2_url.value = DEFAULT_NAV.portfolio.subs[1].url;
-        if(nav_contact_label) nav_contact_label.value = DEFAULT_NAV.contact.label; if(nav_contact_sub1_label) nav_contact_sub1_label.value = DEFAULT_NAV.contact.subs[0].label; if(nav_contact_sub1_url) nav_contact_sub1_url.value = DEFAULT_NAV.contact.subs[0].url; if(nav_contact_sub2_label) nav_contact_sub2_label.value = DEFAULT_NAV.contact.subs[1].label; if(nav_contact_sub2_url) nav_contact_sub2_url.value = DEFAULT_NAV.contact.subs[1].url;
-      }catch(e){ }
-      // Reset label editor values
-      if(lbl_save_label) lbl_save_label.value = 'Save';
-      if(lbl_reset_label) lbl_reset_label.value = 'Reset';
-      if(lbl_close_label) lbl_close_label.value = 'Close';
-      // Reset button text
-      if(document.getElementById('saveSettings')) document.getElementById('saveSettings').textContent = 'Save';
-      if(document.getElementById('clearSettings')) document.getElementById('clearSettings').textContent = 'Reset';
-      if(document.getElementById('closeSettings')) document.getElementById('closeSettings').textContent = 'Close';
+
       localStorage.removeItem(STORAGE_KEY);
-      // reapply defaults to DOM
-      try{ applyLabels(); }catch(e){}
     });
 
     // translations removed
@@ -1363,6 +1127,7 @@
           });
         });
         if(!sources.length) return;
+        console.log('Registering font family', familyName, 'from files', fileList);
         const css = `@font-face{font-family:"${familyName}";src:${sources.join(',')};font-display:swap;}`;
         const style = document.createElement('style'); style.textContent = css; document.head.appendChild(style);
       }
@@ -1415,7 +1180,6 @@
     await loadPresets().then(() => { loadTitlePresets(); }).catch((e) => { console.error('Preset loading failed:', e); loadTitlePresets(); });
     await loadFontsManifest();
     await loadSettings();
-    applyLabels();
   })();
   </script>
 </body>
