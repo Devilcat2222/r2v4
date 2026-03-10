@@ -72,29 +72,61 @@
     #toggleBtn:hover { background: rgba(17,24,39,0.06); transform: translateY(-1px); }
     #toggleBtn img{ display:block; width:20px; height:20px; object-fit:contain; }
 
-    /* ---------------- Sidebar (top) ---------------- */
-    #topSidebar {
+    /* ---------------- Sidebar (left) ---------------- */
+    #sidebar {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
+      height: 100%;
+      width: 250px;
       background: var(--card);
       color: var(--text);
-      padding: 56px 18px 20px;
-      transform: translate3d(0,-110%,0);
-      transition: transform .36s cubic-bezier(.2,.9,.2,1), opacity .28s linear;
-      will-change: transform, opacity;
+      padding: 20px;
+      transform: translateX(-100%);
+      transition: transform .3s ease;
       z-index: 1000;
-      box-shadow: 0 8px 24px rgba(15,23,42,0.08);
-      border-bottom: 1px solid rgba(15,23,42,0.03);
+      box-shadow: 2px 0 8px rgba(15,23,42,0.08);
+      overflow-y: auto;              /* allow vertical scrolling */
+      -webkit-overflow-scrolling: touch;
     }
-    #topSidebar.open { transform: translateY(0); }
-    #topSidebar.open{ opacity: 1; }
-    #topSidebar{ opacity: 0.98; }
+    #sidebar.open { transform: translateX(0); }
+    #sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    #sidebar li {
+      margin: 6px 0;
+    }
+    #sidebar a, #sidebar .submenu-toggle {
+      display: block;
+      color: var(--accent);
+      text-decoration: none;
+      padding: 8px;
+      border-radius: 8px;
+      background: transparent;
+      border: none;
+      text-align: left;
+      width: 100%;
+      font-size: 1.05rem;
+      cursor: pointer;
+    }
+    #sidebar a:hover, #sidebar .submenu-toggle:hover {
+      background: rgba(17,24,39,0.04);
+      color: var(--text);
+    }
+    .submenu {
+      display: none;
+      padding-left: 16px;
+      margin-top: 4px;
+    }
+    .submenu.open {
+      display: block;
+    }
 
     /* Close button inside sidebar */
     #closeBtn{
-      position: absolute;
+      position: sticky;
       top: 14px;
       right: 14px;
       background: transparent;
@@ -102,28 +134,9 @@
       color: var(--muted);
       font-size: 1.25rem;
       cursor: pointer;
+      z-index: 1001; /* stay above scrolling links */
     }
 
-    /* Sidebar links (fixed layout) */
-    #topSidebar ul{
-      list-style: none;
-      padding: 0;
-      margin: 8px 0 0 0;
-      display: flex;
-      flex-direction: column;
-      gap: var(--gap);
-      justify-content: flex-start;
-      align-items: stretch;
-    }
-    #topSidebar ul li a{
-      color: var(--accent);
-      text-decoration: none;
-      font-size: 1.05rem;
-      padding: 8px 12px;
-      border-radius: 8px;
-      transition: background .14s, color .14s;
-    }
-    #topSidebar ul li a:hover{ background: rgba(17,24,39,0.04); color: var(--text); }
 
     /* ---------------- Main content (demo) ---------------- */
     main{
@@ -157,8 +170,9 @@
 
     /* Responsive adjustments */
     @media (min-width: 720px){
-      #topSidebar { padding: 64px 24px 28px; }
-      main { padding-top: 120px; }
+      /* give main content room for sidebar on wider screens */
+      main { padding-top: 120px; padding-left: 280px; }
+      #sidebar { padding: 64px 24px 28px; }
     }
     /* ---------------- Settings panel ---------------- */
     #settingsBtn{
@@ -277,8 +291,8 @@
       will-change: transform, opacity;
       pointer-events: none;
     }
-    .nav-top{ display:flex; flex-direction: column; gap:8px; align-items:flex-start; margin-bottom: 8px; width: 100%; }
-    .nav-top .nav-label{ color:var(--accent); text-decoration:none; font-size:1.05rem; padding:8px 12px; border-radius:8px; transition: background .14s, color .14s; display:inline-block; }
+    .nav-top{ display:flex; flex-direction: row; gap:8px; align-items:center; margin-bottom: 0; width: 100%; }
+    .nav-top .nav-label{ flex: 1; color:var(--accent); text-decoration:none; font-size:1.05rem; padding:8px 12px; border-radius:8px; transition: background .14s, color .14s; display:block; }
     .nav-top .nav-label:hover{ background: rgba(17,24,39,0.04); color:var(--text); }
     .nav-item.expanded .submenu{
       transform: scaleY(1);
@@ -316,58 +330,48 @@
   <!-- Settings button -->
   <button id="settingsBtn"><img id="settingsIcon" alt="settings icon"></button>
 
-  <!-- Top sidebar -->
-  <nav id="topSidebar" aria-hidden="true">
+  <!-- Sidebar -->
+  <nav id="sidebar" aria-hidden="true">
     <button id="closeBtn">✕</button>
     <ul>
-      <li class="nav-item">
-        <div id="navHomeToggle" class="nav-top" role="button" tabindex="0" aria-expanded="false">
-          <span id="navHomeLabel" class="nav-label">プロキシ(ブロック解除)</span>
-        </div>
-        <div class="submenu" aria-hidden="true">
-          <a id="navHomeOverview" href="https://uhh-like.secret.hosteriafutaleufu.cl/">Glint browser</a>
-          <a id="navHomeFeatures" href="https://supergisfire.com.cdn.cloudflare.net/">Petezah</a>
-          <a id="navHomeFeatures" href="">機能</a>
-          <a id="navHomeFeatures" href="">機能</a>
-          <a id="navHomeFeatures" href="">機能</a>
-          <a id="navHomeFeatures" href="">機能</a>
-        </div>
+      <li><a href="/linkdmp.html" title="Glint browser">Glint browser</a></li>
+      <li><a href="https://supergisfire.com.cdn.cloudflare.net/" title="Petezah">Petezah</a></li>
+      <li>
+        <button class="submenu-toggle" title="空">空</button>
+        <ul class="submenu">
+          <li><a href="">機能1</a></li>
+          <li><a href="">機能2</a></li>
+          <li><a href="">機能3</a></li>
+          <li><a href="">機能4</a></li>
+        </ul>
       </li>
-      <li class="nav-item">
-        <div id="navAboutToggle" class="nav-top" role="button" tabindex="0" aria-expanded="false">
-          <span id="navAboutLabel" class="nav-label">について</span>
-        </div>
-        <div class="submenu" aria-hidden="true">
-          <a id="navAboutTeam" href="#team">チーム</a>
-          <a id="navAboutHistory" href="#history">歴史</a>
-        </div>
+      <li>
+        <button class="submenu-toggle" title="空">空</button>
+        <ul class="submenu">
+          <li><a href="#team">チーム</a></li>
+          <li><a href="#history">歴史</a></li>
+        </ul>
       </li>
-      <li class="nav-item">
-        <div id="navServicesToggle" class="nav-top" role="button" tabindex="0" aria-expanded="false">
-          <span id="navServicesLabel" class="nav-label">サービス</span>
-        </div>
-        <div class="submenu" aria-hidden="true">
-          <a id="navServicesConsulting" href="#consulting">コンサルティング</a>
-          <a id="navServicesDevelopment" href="#development">開発</a>
-        </div>
+      <li>
+        <button class="submenu-toggle" title="空">空</button>
+        <ul class="submenu">
+          <li><a href="#consulting">コンサルティング</a></li>
+          <li><a href="#development">開発</a></li>
+        </ul>
       </li>
-      <li class="nav-item">
-        <div id="navPortfolioToggle" class="nav-top" role="button" tabindex="0" aria-expanded="false">
-          <span id="navPortfolioLabel" class="nav-label">ポートフォリオ</span>
-        </div>
-        <div class="submenu" aria-hidden="true">
-          <a id="navPortfolioProjects" href="#projects">プロジェクト</a>
-          <a id="navPortfolioCaseStudies" href="#case-studies">ケーススタディ</a>
-        </div>
+      <li>
+        <button class="submenu-toggle" title="空">空</button>
+        <ul class="submenu">
+          <li><a href="#projects">プロジェクト</a></li>
+          <li><a href="#case-studies">ケーススタディ</a></li>
+        </ul>
       </li>
-      <li class="nav-item">
-        <div id="navContactToggle" class="nav-top" role="button" tabindex="0" aria-expanded="false">
-          <span id="navContactLabel" class="nav-label">お問い合わせ</span>
-        </div>
-        <div class="submenu" aria-hidden="true">
-          <a id="navContactGetInTouch" href="#contact-form">ご連絡</a>
-          <a id="navContactLocations" href="#locations">拠点</a>
-        </div>
+      <li>
+        <button class="submenu-toggle" title="空">空</button>
+        <ul class="submenu">
+          <li><a href="#contact-form">ご連絡</a></li>
+          <li><a href="#locations">拠点</a></li>
+        </ul>
       </li>
     </ul>
   </nav>
@@ -518,20 +522,20 @@
   <script>
     const toggleBtn = document.getElementById('toggleBtn');
     const closeBtn   = document.getElementById('closeBtn');
-    const sidebar    = document.getElementById('topSidebar');
+    const sidebar    = document.getElementById('sidebar');
 
     function openSidebar() {
       sidebar.classList.add('open');
       sidebar.setAttribute('aria-hidden', 'false');
       toggleBtn.setAttribute('aria-pressed', 'true');
-      if(toggleBtn) toggleBtn.setAttribute('aria-label', 'Close menu');
+      toggleBtn.setAttribute('aria-label','Close menu');
     }
 
     function closeSidebar() {
       sidebar.classList.remove('open');
       sidebar.setAttribute('aria-hidden', 'true');
       toggleBtn.setAttribute('aria-pressed', 'false');
-      if(toggleBtn) toggleBtn.setAttribute('aria-label', 'Open menu');
+      toggleBtn.setAttribute('aria-label','Open menu');
     }
 
     toggleBtn.addEventListener('click', () => {
@@ -540,49 +544,18 @@
 
     closeBtn.addEventListener('click', closeSidebar);
 
-    // Optional: close when clicking a link (mobile friendliness)
-    sidebar.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', closeSidebar);
-    });
+    // close when clicking a link inside sidebar
+    sidebar.querySelectorAll('a').forEach(link => link.addEventListener('click', closeSidebar));
 
-    // Expandable submenu behavior for top sidebar
-    (function setupSubmenus(){
-      const tops = sidebar.querySelectorAll('.nav-top');
-      tops.forEach(top => {
-        const toggleFn = (e) => {
-          // if clicking on inner link, allow link navigation
-          if(e.target && (e.target.tagName === 'A' || e.target.closest && e.target.closest('a'))) return;
-          const li = top.closest('.nav-item');
-          if(!li) return;
-          // Check if already expanded
-          const isCurrentlyExpanded = li.classList.contains('expanded');
-          if(isCurrentlyExpanded){
-            // If clicking expanded item, just collapse it
-            li.classList.remove('expanded');
-            top.setAttribute('aria-expanded', 'false');
-            const submenu = li.querySelector('.submenu');
-            if(submenu) submenu.setAttribute('aria-hidden', 'true');
-          } else {
-            // Close all other expanded items first
-            const expandedItems = sidebar.querySelectorAll('.nav-item.expanded');
-            expandedItems.forEach(item => {
-              item.classList.remove('expanded');
-              const itemTop = item.querySelector('.nav-top');
-              if(itemTop) itemTop.setAttribute('aria-expanded', 'false');
-              const itemSubmenu = item.querySelector('.submenu');
-              if(itemSubmenu) itemSubmenu.setAttribute('aria-hidden', 'true');
-            });
-            // Expand the new item
-            li.classList.add('expanded');
-            top.setAttribute('aria-expanded', 'true');
-            const submenu = li.querySelector('.submenu');
-            if(submenu) submenu.setAttribute('aria-hidden', 'false');
-          }
-        };
-        top.addEventListener('click', toggleFn);
-        top.addEventListener('keydown', (e) => { if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleFn(e); } });
+    // submenu toggle behavior
+    sidebar.querySelectorAll('.submenu-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const submenu = btn.nextElementSibling;
+        if(submenu && submenu.classList.contains('submenu')){
+          submenu.classList.toggle('open');
+        }
       });
-    })();
+    });
 
     /* ---------------- Settings behavior ---------------- */
     const settingsBtn = document.getElementById('settingsBtn');
